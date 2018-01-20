@@ -6,16 +6,23 @@ import { AppComponent } from './app.component';
 import { ViewsComponent } from './views/views.component';
 
 import { ApiService } from './api.service';
+import { CampionatoComponent } from './campionato/campionato.component';
+import { PunteggioComponent } from './punteggio/punteggio.component';
+import { SquadraComponent } from './squadra/squadra.component';
 
 const appRoutes: Routes = [
   { path: 'views', component: ViewsComponent,  pathMatch: 'full' },
   { path: 'views/:obj', component: ViewsComponent, pathMatch: 'full' },
+  { path: 'campionato', component: CampionatoComponent,  pathMatch: 'full' },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    ViewsComponent
+    ViewsComponent,
+    CampionatoComponent,
+    PunteggioComponent,
+    SquadraComponent
   ],
   imports: [
     BrowserModule,
