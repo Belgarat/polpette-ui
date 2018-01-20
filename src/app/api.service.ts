@@ -1,5 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Squadra } from './squadra/squadra.model';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -8,25 +10,26 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ApiService {
-    private serviceUrl:string = "http://localhost:8080/api/v1"
+    private serviceUrl:string = "http://localhost:3000/api/"
 
-    constructor(private http: Http){
+    constructor(private http: HttpClient, apiService: ApiService    ){
     }
 
     get(path: string, id: number){
     }
 
-    list(path: string){
-        let response;
-        if(path=="workers"){
-            response = this.http.get(this.serviceUrl, {headers: this.getHeaders()})
+    list(path: string): Observable<Squadra[]>{
+        return this.http.get<Squadra[]>(this.serviceUrl+path)
+        /*let response;
+        if(path=="squadra"){
+            response = this.http.get(this.serviceUrl+path, {headers: this.getHeaders()})
                             .map(res => JSON.stringify(res))
                             .catch(this.handleError);
-        }
+        }*/
         /*if(path=="tickets"){
             response = this.lsTickets();
-        }*/
-        return response;
+        }
+        return response;*/
     }
 
     /*lsTickets(){

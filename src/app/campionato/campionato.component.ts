@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Campionato} from './campionato.model';
 
 @Component({
   selector: 'app-campionato',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./campionato.component.css']
 })
 export class CampionatoComponent implements OnInit {
+  public camp: Campionato;
 
-  constructor() { }
+  constructor() {
+    this.camp = new Campionato();
+    this.camp.anno = 2014;
+  }
 
   ngOnInit() {
   }

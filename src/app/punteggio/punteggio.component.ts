@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Punteggio } from './punteggio.model';
 
 @Component({
   selector: 'app-punteggio',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./punteggio.component.css']
 })
 export class PunteggioComponent implements OnInit {
+  public punteggio: Punteggio;
 
-  constructor() { }
+  constructor() {
+    this.punteggio = new Punteggio();
+  }
 
   ngOnInit() {
   }

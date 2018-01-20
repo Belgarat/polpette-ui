@@ -14,6 +14,7 @@ const appRoutes: Routes = [
   { path: 'views', component: ViewsComponent,  pathMatch: 'full' },
   { path: 'views/:obj', component: ViewsComponent, pathMatch: 'full' },
   { path: 'campionato', component: CampionatoComponent,  pathMatch: 'full' },
+  { path: 'squadra', component: SquadraComponent,  pathMatch: 'full' },
 ];
 
 @NgModule({
