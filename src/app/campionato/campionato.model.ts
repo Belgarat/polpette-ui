@@ -1,4 +1,4 @@
 export class Campionato {
-    "id": number;
+    "id": "string";
     "anno": number;
 }

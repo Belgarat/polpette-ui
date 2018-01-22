@@ -1,36 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ApiService } from './api.service';
+import { HttpClientModule }    from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { ViewsComponent } from './views/views.component';
 
-import { ApiService } from './api.service';
+import { ViewsComponent } from './views/views.component';
 import { CampionatoComponent } from './campionato/campionato.component';
 import { PunteggioComponent } from './punteggio/punteggio.component';
 import { SquadraComponent } from './squadra/squadra.component';
 
-const appRoutes: Routes = [
-  { path: 'views', component: ViewsComponent,  pathMatch: 'full' },
-  { path: 'views/:obj', component: ViewsComponent, pathMatch: 'full' },
-  { path: 'campionato', component: CampionatoComponent,  pathMatch: 'full' },
-  { path: 'squadra', component: SquadraComponent,  pathMatch: 'full' },
-];
+import { AppRoutingModule } from './app-routing.module';
+import { SquadraDetailComponent } from './squadra-detail/squadra-detail.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
     ViewsComponent,
     CampionatoComponent,
     PunteggioComponent,
-    SquadraComponent
+    SquadraComponent,
+    AppComponent,
+    SquadraDetailComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     ApiService

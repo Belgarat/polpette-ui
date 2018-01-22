@@ -1,5 +1,5 @@
 export class Squadra {
-    "id": number;
+    "id": "string";
     "nome": "string";
-    "campionatoId": number;
+    "campionatoId": "string";
 }

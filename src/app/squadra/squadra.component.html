@@ -1,3 +1,18 @@
-<p>
-  squadra works!
-</p>
+<div>
+  <label>Nome squadra:
+    <input #squadraName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(squadraName.value); squadraName.value=''">
+    add
+  </button>
+</div>
+<ul class="heroes">
+  <li *ngFor="let squadre of squadre">
+    <a routerLink="/squadra/{{squadre?.id}}">
+      {{squadre?.nome}}
+    </a>
+    <button class="delete" title="delete hero"
+    (click)="delete(squadre)">x</button>
+  </li>
+</ul>
