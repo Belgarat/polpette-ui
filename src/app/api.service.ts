@@ -40,7 +40,7 @@ export class ApiService {
             catchError(this.handleError<Squadra>(`getSquadra id=${id}`))
         );
     }
-    
+
     /** GET Squadra by id. Will 404 if id not found */
     getSquadra(id: string): Observable<Squadra> {
         const url = `${this.serviceUrl+'squadre'}/${id}`;
@@ -49,7 +49,7 @@ export class ApiService {
         catchError(this.handleError<Squadra>(`getSquadra id=${id}`))
         );
     }
-    
+
     /* GET squadre whose name contains search term */
     searchsquadre(term: string): Observable<Squadra[]> {
         if (!term.trim()) {
@@ -61,7 +61,15 @@ export class ApiService {
         catchError(this.handleError<Squadra[]>('searchsquadre', []))
         );
     }
-    
+
+    /** PUT: update the hero on the server */
+    updateSquadra (squadra: Squadra): Observable<any> {
+        return this.http.put(this.serviceUrl + 'squadre', squadra, httpOptions).pipe(
+            tap(_ => this.log(`updated hero id=${squadra.id}`)),
+            catchError(this.handleError<any>('updateSquadra'))
+        );
+    }
+
     list(path: string): Observable<Squadra[]>{
         return this.http.get<Squadra[]>(this.serviceUrl+path)
         /*let response;
@@ -78,7 +86,7 @@ export class ApiService {
 
     /** POST: add a new hero to the server */
     addSquadra (squadra: Squadra): Observable<Squadra> {
-        return this.http.post<Squadra>(this.serviceUrl+'squadre', squadra, httpOptions).pipe(
+        return this.http.post<Squadra>(this.serviceUrl + 'squadre', squadra, httpOptions).pipe(
             tap((squadra: Squadra) => this.log(`added hero w/ id=${squadra.id}`)),
             catchError(this.handleError<Squadra>('addSquadra'))
         );
@@ -89,13 +97,13 @@ export class ApiService {
     deleteSquadra (squadra: Squadra | string): Observable<Squadra> {
         const id = typeof squadra === 'string' ? squadra : squadra.id;
         const url = `${this.serviceUrl+'squadre'}/${id}`;
-    
+
         return this.http.delete<Squadra>(url, httpOptions).pipe(
             tap(_ => this.log(`deleted hero id=${id}`)),
             catchError(this.handleError<any>('deleteSquadra'))
         );
     }
-    
+
     /**
      * Handle Http operation that failed.
      * Let the app continue.
@@ -104,13 +112,13 @@ export class ApiService {
      */
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
-    
+
         // TODO: send the error to remote logging infrastructure
         console.error(error); // log to console instead
-    
+
         // TODO: better job of transforming error for user consumption
         this.log(`${operation} failed: ${error.message}`);
-    
+
         // Let the app keep running by returning an empty result.
         return of(result as T);
         };

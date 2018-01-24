@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ApiService } from './api.service';
 import { HttpClientModule }    from '@angular/common/http';
 
@@ -25,7 +26,8 @@ import { SquadraDetailComponent } from './squadra-detail/squadra-detail.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     ApiService

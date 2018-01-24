@@ -13,30 +13,29 @@ import { Squadra } from '../squadra/squadra.model';
 export class SquadraDetailComponent implements OnInit {
   @Input() squadra: Squadra;
 
-
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
     private location: Location
   ) {}
- 
+
   ngOnInit(): void {
     this.getSquadra();
   }
- 
+
   getSquadra(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.apiService.getSquadra(id)
       .subscribe(squadra => this.squadra = squadra);
   }
- 
+
   goBack(): void {
     this.location.back();
   }
- 
+
  save(): void {
-    /*this.apiService.updateSquadra(this.squadra)
-      .subscribe(() => this.goBack());*/
+    this.apiService.updateSquadra(this.squadra)
+      .subscribe(() => this.goBack());
   }
 
 }

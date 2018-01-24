@@ -1,6 +1,16 @@
-<p>
-  Id squadra: {{squadra?.id}}
-  Nome squadra: {{squadra?.nome}}
-</p>
-<button (click)="goBack()">go back</button>
-<button (click)="save()">save</button>
+<div *ngIf="squadra">
+  <p>
+    <label>
+      Id Campionato: 
+      <input [(ngModel)]="squadra.campionatoId" [value]="squadra?.campionatoId" />
+    </label>
+  </p>  
+  <p>
+    <label>
+      Nome squadra: 
+      <input [(ngModel)]="squadra.nome" [value]="squadra?.nome" />
+    </label>
+  </p>
+  <button (click)="goBack()">go back</button>
+  <button (click)="save()">save</button>
+</div>
