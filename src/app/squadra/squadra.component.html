@@ -1,18 +1,19 @@
 <div>
   <label>Nome squadra:
-    <input #squadraName />
+    <mat-form-field class="squadra-detail-full-width">
+      <input matInput #squadraName />
+    </mat-form-field>
   </label>
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(squadraName.value); squadraName.value=''">
-    add
+  <button mat-button (click)="add(squadraName.value); squadraName.value=''">
+    <mat-icon>check</mat-icon>
   </button>
 </div>
-<ul class="heroes">
-  <li *ngFor="let squadre of squadre">
+<mat-list role="list">
+  <mat-list-item role="listitem" *ngFor="let squadre of squadre">
+    <button mat-button class="delete" title="Canella squadra" (click)="delete(squadre)"><mat-icon>backspace</mat-icon></button>
     <a routerLink="/squadra/{{squadre?.id}}">
       {{squadre?.nome}}
     </a>
-    <button class="delete" title="delete hero"
-    (click)="delete(squadre)">x</button>
-  </li>
-</ul>
+  </mat-list-item>
+</mat-list>
