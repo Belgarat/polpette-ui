@@ -1,16 +1,12 @@
-<div *ngIf="squadra">
-  <p>
-    <label>
-      Id Campionato: 
-      <input [(ngModel)]="squadra.campionatoId" [value]="squadra?.campionatoId" />
-    </label>
-  </p>  
-  <p>
-    <label>
-      Nome squadra: 
-      <input [(ngModel)]="squadra.nome" [value]="squadra?.nome" />
-    </label>
-  </p>
-  <button (click)="goBack()">go back</button>
-  <button (click)="save()">save</button>
-</div>
+<form *ngIf="squadra" class="squadra-detail-form">
+  <mat-form-field class="squadra-detail-full-width">
+    <input matInput placeholder="Id Campionato" [(ngModel)]="squadra.campionatoId" [value]="squadra?.campionatoId" name="campionatoId" />
+  </mat-form-field>
+  <mat-form-field class="squadra-detail-full-width">
+    <input matInput placeholder="Nome squadra" [(ngModel)]="squadra.nome" [value]="squadra?.nome" name="nome" />
+  </mat-form-field>
+</form>
+
+<button (click)="goBack()">go back</button>
+<button (click)="save()">save</button>
+
