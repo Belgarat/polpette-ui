@@ -60,8 +60,20 @@ export class ApiService {
         return of([]);
         }
         return this.http.get<Squadra[]>(`api/squadre/?name=${term}`).pipe(
-        tap(_ => this.log(`found squadre matching "${term}"`)),
-        catchError(this.handleError<Squadra[]>('searchsquadre', []))
+            tap(_ => this.log(`found squadre matching "${term}"`)),
+            catchError(this.handleError<Squadra[]>('searchsquadre', []))
+        );
+    }
+    /*{"where":{"campionatoId":{"like":"5a6a3e710d86ee370314f41e"}}}*/
+    /* GET squadre whose name contains search term */
+    filtersquadre(term: string): Observable<Squadra[]> {
+        if (!term.trim()) {
+        // if not search term, return empty Squadra array.
+        return of([]);
+        }
+        return this.http.get<Squadra[]>(`api/squadre/?name=${term}`).pipe(
+            tap(_ => this.log(`found squadre matching "${term}"`)),
+            catchError(this.handleError<Squadra[]>('searchsquadre', []))
         );
     }
 

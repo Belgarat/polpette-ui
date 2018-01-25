@@ -1,3 +1,4 @@
+import { Squadra } from './../squadra/squadra.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -12,6 +13,7 @@ import { Campionato } from '../campionato/campionato.model';
 })
 export class CampionatoDetailComponent implements OnInit {
   @Input() campionato: Campionato;
+  private squadre: Squadra[];
 
   constructor(
     private route: ActivatedRoute,
