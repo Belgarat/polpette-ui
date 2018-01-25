@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import { ViewsComponent } from './views/views.component';
 import { CampionatoComponent } from './campionato/campionato.component';
+import { CampionatoDetailComponent } from './campionato-detail/campionato-detail.component';
 import { PunteggioComponent } from './punteggio/punteggio.component';
 import { SquadraComponent } from './squadra/squadra.component';
 
@@ -20,6 +21,7 @@ import { SquadraDetailComponent } from './squadra-detail/squadra-detail.componen
   declarations: [
     ViewsComponent,
     CampionatoComponent,
+    CampionatoDetailComponent,
     PunteggioComponent,
     SquadraComponent,
     AppComponent,

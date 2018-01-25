@@ -1,3 +1,19 @@
-<p>
-  Campionato {{this.camp.anno}}
-</p>
+<div>
+  <label>Campionato:
+    <mat-form-field class="campionato-detail-full-width">
+      <input matInput #campionatoAnno />
+    </mat-form-field>
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button mat-button (click)="add(campionatoAnno.value); campionatoAnno.value=''">
+    <mat-icon>check</mat-icon>
+  </button>
+</div>
+<mat-list role="list">
+  <mat-list-item role="listitem" *ngFor="let campionato of campionati">
+    <button mat-button class="delete" title="Cancella campionato" (click)="delete(campionato)"><mat-icon>backspace</mat-icon></button>
+    <a routerLink="/campionati/{{campionato?.id}}">
+      {{campionato?.anno}}
+    </a>
+  </mat-list-item>
+</mat-list>

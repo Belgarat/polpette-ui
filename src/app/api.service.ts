@@ -6,6 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Squadra } from './squadra/squadra.model';
+import { Campionato } from './campionato/campionato.model';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,6 +18,8 @@ export class ApiService {
 
     constructor(private http: HttpClient){
     }
+
+    /** GESTIONE DELLE SQUADRE */
 
     /** GET squadre from the server */
     getSquadre (): Observable<Squadra[]> {
@@ -64,24 +67,10 @@ export class ApiService {
 
     /** PUT: update the hero on the server */
     updateSquadra (squadra: Squadra): Observable<any> {
-        return this.http.put(this.serviceUrl + 'squadre', squadra, httpOptions).pipe(
+        return this.http.patch(this.serviceUrl + 'squadre', squadra, httpOptions).pipe(
             tap(_ => this.log(`updated hero id=${squadra.id}`)),
             catchError(this.handleError<any>('updateSquadra'))
         );
-    }
-
-    list(path: string): Observable<Squadra[]>{
-        return this.http.get<Squadra[]>(this.serviceUrl+path)
-        /*let response;
-        if(path=="squadra"){
-            response = this.http.get(this.serviceUrl+path, {headers: this.getHeaders()})
-                            .map(res => JSON.stringify(res))
-                            .catch(this.handleError);
-        }*/
-        /*if(path=="tickets"){
-            response = this.lsTickets();
-        }
-        return response;*/
     }
 
     /** POST: add a new hero to the server */
@@ -102,6 +91,95 @@ export class ApiService {
             tap(_ => this.log(`deleted hero id=${id}`)),
             catchError(this.handleError<any>('deleteSquadra'))
         );
+    }
+
+    /** GESTIONE DEI CAMPIONATI */
+
+    /** GET campionati from the server */
+    getCampionati (): Observable<Campionato[]> {
+        return this.http.get<Campionato[]>(this.serviceUrl+'campionati')
+        .pipe(
+            tap(campionato => this.log(`fetched campionati`)),
+            catchError(this.handleError('getCampionati', []))
+        );
+    }
+
+    /** GET Campionato by id. Return `undefined` when id not found */
+    getCampionatoNo404<Data>(id: string): Observable<Campionato> {
+        const url = `${this.serviceUrl+'squadre'}/?id=${id}`;
+        return this.http.get<Campionato[]>(url)
+        .pipe(
+            map(campionato => campionato[0]), // returns a {0|1} element array
+            tap(h => {
+            const outcome = h ? `fetched` : `did not find`;
+            this.log(`${outcome} campionato id=${id}`);
+            }),
+            catchError(this.handleError<Campionato>(`getCampionato id=${id}`))
+        );
+    }
+
+    /** GET Campionato by id. Will 404 if id not found */
+    getCampionato(id: string): Observable<Campionato> {
+        const url = `${this.serviceUrl+'campionati'}/${id}`;
+        return this.http.get<Campionato>(url).pipe(
+            tap(_ => this.log(`fetched Campionato id=${id}`)),
+            catchError(this.handleError<Campionato>(`getCampionato id=${id}`))
+        );
+    }
+
+    /* GET squadre whose name contains search term */
+    searchcampionati(term: string): Observable<Campionato[]> {
+        if (!term.trim()) {
+        // if not search term, return empty Squadra array.
+        return of([]);
+        }
+        return this.http.get<Campionato[]>(`api/campionati/?name=${term}`).pipe(
+            tap(_ => this.log(`found campionati matching "${term}"`)),
+            catchError(this.handleError<Campionato[]>('searchcampionati', []))
+        );
+    }
+
+    /** PUT: update the hero on the server */
+    updateCampionato (campionato: Campionato): Observable<any> {
+        return this.http.patch(this.serviceUrl + 'campionati', campionato, httpOptions).pipe(
+            tap(_ => this.log(`updated campionato id=${campionato.id}`)),
+            catchError(this.handleError<any>('updateCampionato'))
+        );
+    }
+
+    /** POST: add a new hero to the server */
+    addCampionato (campionato: Campionato): Observable<Campionato> {
+        return this.http.post<Campionato>(this.serviceUrl + 'campionati', campionato, httpOptions).pipe(
+            tap((campionato: Campionato) => this.log(`added campionato w/ id=${campionato.id}`)),
+            catchError(this.handleError<Campionato>('addCampionato'))
+        );
+    }
+
+
+    /** DELETE: delete the squadra from the server */
+    deleteCampionato (campionato: Campionato | string): Observable<Campionato> {
+        const id = typeof campionato === 'string' ? campionato : campionato.id;
+        const url = `${this.serviceUrl+'campionati'}/${id}`;
+
+        return this.http.delete<Campionato>(url, httpOptions).pipe(
+            tap(_ => this.log(`deleted campionato id=${id}`)),
+            catchError(this.handleError<any>('deleteCampionato'))
+        );
+    }
+
+
+    list(path: string): Observable<Squadra[]>{
+        return this.http.get<Squadra[]>(this.serviceUrl+path)
+        /*let response;
+        if(path=="squadra"){
+            response = this.http.get(this.serviceUrl+path, {headers: this.getHeaders()})
+                            .map(res => JSON.stringify(res))
+                            .catch(this.handleError);
+        }*/
+        /*if(path=="tickets"){
+            response = this.lsTickets();
+        }
+        return response;*/
     }
 
     /**
