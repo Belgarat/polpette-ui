@@ -1,7 +1,15 @@
+
 <form *ngIf="squadra" class="squadra-detail-form">
-  <mat-form-field class="squadra-detail-full-width">
-    <input matInput placeholder="Id Campionato" [(ngModel)]="squadra.campionatoId" [value]="squadra?.campionatoId" name="campionatoId" />
+  <mat-form-field>
+    <mat-select placeholder="Campionato" [(ngModel)]="squadra.campionatoId" name="campionatoId" [(value)]="selected">
+      <mat-option *ngFor="let campionato of campionati" [value]="campionato.id">
+        {{ campionato.anno }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
+<!--  <mat-form-field class="squadra-detail-full-width">
+    <input matInput placeholder="Id Campionato" [(ngModel)]="squadra.campionatoId" [value]="squadra?.campionatoId" name="campionatoId" />
+  </mat-form-field>-->
   <mat-form-field class="squadra-detail-full-width">
     <input matInput placeholder="Nome squadra" [(ngModel)]="squadra.nome" [value]="squadra?.nome" name="nome" />
   </mat-form-field>

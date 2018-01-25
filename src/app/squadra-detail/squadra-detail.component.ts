@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { ApiService } from '../api.service';
 import { Squadra } from '../squadra/squadra.model';
+import { Campionato } from '../campionato/campionato.model';
 
 @Component({
   selector: 'app-squadra-detail',
@@ -12,6 +13,7 @@ import { Squadra } from '../squadra/squadra.model';
 })
 export class SquadraDetailComponent implements OnInit {
   @Input() squadra: Squadra;
+  @Input() campionati: Campionato[];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +23,11 @@ export class SquadraDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSquadra();
+    this.getCampionati();
+  }
+
+  getCampionati(): void {
+    this.apiService.getCampionati().subscribe(campionati => this.campionati = campionati);
   }
 
   getSquadra(): void {
@@ -34,6 +41,7 @@ export class SquadraDetailComponent implements OnInit {
   }
 
  save(): void {
+    console.log(this.squadra);
     this.apiService.updateSquadra(this.squadra)
       .subscribe(() => this.goBack());
   }
