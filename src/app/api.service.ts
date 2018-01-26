@@ -8,13 +8,13 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Squadra } from './squadra/squadra.model';
 import { Campionato } from './campionato/campionato.model';
 
-const httpOptions = {
+var httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
 @Injectable()
 export class ApiService {
-    private serviceUrl:string = "http://10.121.1.54:3000/api/"
+    private serviceUrl:string = "http://localhost:3000/api/"
 
     constructor(private http: HttpClient){
     }
