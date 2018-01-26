@@ -14,7 +14,7 @@ const httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl:string = "http://localhost:3000/api/"
+    private serviceUrl:string = "http://10.121.1.54:3000/api/"
 
     constructor(private http: HttpClient){
     }
@@ -151,6 +151,22 @@ export class ApiService {
         );
     }
 
+    /* GET squadre whose name contains search term */
+    search(object: string, field: string, term: string): Observable<any[]> {
+        if (!term.trim() && !object.trim() && !field.trim()) {
+        // if not search term, return empty Squadra array.
+            this.log('parameter error: search in ' + object + ', field ' + field + ', term ' + term);
+            return of([]);
+        }
+        this.log('parameter ok: search in ' + object + ', field ' + field + ', term ' + term);
+        let filter = `{"where":{"${field}":{"like":"${term}"}}}`;
+        console.log(JSON.stringify(filter));
+        return this.http.get<Campionato[]>(this.serviceUrl + object + '/?filter=' + filter).pipe(
+            tap(_ => this.log(`found campionati matching "${term}"`)),
+            catchError(this.handleError<Campionato[]>('searchcampionati', []))
+        );
+    }
+
     /** PUT: update the hero on the server */
     updateCampionato (campionato: Campionato): Observable<any> {
         return this.http.patch(this.serviceUrl + 'campionati', campionato, httpOptions).pipe(
@@ -216,7 +232,7 @@ export class ApiService {
 
     /** Log a SquadraService message with the MessageService */
     private log(message: string) {
-        console.log('SquadraService: ' + message);
+        console.log('CampionatoService: ' + message);
     }
 
     /*lsTickets(){

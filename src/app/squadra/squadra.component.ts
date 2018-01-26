@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Squadra } from './squadra.model';
+import { Campionato } from '../campionato/campionato.model';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { ApiService } from '../api.service';
 })
 export class SquadraComponent implements OnInit {
   public squadre: Squadra[];
+  public campionati: Campionato[]
 
   constructor(private apiService: ApiService) {
     
@@ -16,6 +18,11 @@ export class SquadraComponent implements OnInit {
 
   ngOnInit() {
     this.getSquadre();
+    this.getCampionati();
+  }
+
+  getCampionati(): void {
+    this.apiService.getCampionati().subscribe(campionati => this.campionati = campionati);
   }
 
   getSquadre(): void {
@@ -24,7 +31,6 @@ export class SquadraComponent implements OnInit {
 
   add(nome: string, campionatoId: string, id: number): void {
     nome = nome.trim();
-    campionatoId = "ciaociao";
     if (!nome) { return; }
     this.apiService.addSquadra({ nome, campionatoId } as Squadra)
       .subscribe(squadra => {

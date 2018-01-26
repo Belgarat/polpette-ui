@@ -23,6 +23,13 @@ export class CampionatoDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCampionato();
+    this.loadSquadre();
+  }
+
+  loadSquadre(): void{
+    const id = this.route.snapshot.paramMap.get('id');
+    this.apiService.search('squadre','campionatoId', id)
+      .subscribe(squadre => this.squadre = squadre);
   }
 
   getCampionato(): void {
@@ -33,6 +40,11 @@ export class CampionatoDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  delete(squadra: Squadra): void {
+    this.squadre = this.squadre.filter(h => h !== squadra);
+    this.apiService.deleteSquadra(squadra).subscribe();
   }
 
  save(): void {

@@ -3,9 +3,16 @@
     <input matInput placeholder="Nome campionato" [(ngModel)]="campionato.anno" [value]="campionato?.anno" name="anno" />
   </mat-form-field>
 </form>
-  
 <div class="button-row">
   <button (click)="goBack()" mat-raised-button>Go back</button>
   <button (click)="save()" mat-raised-button color="primary">Save</button>
 </div>
-  
+<h1>Squadre di questo campionato:</h1>
+<mat-list role="list">
+  <mat-list-item role="listitem" *ngFor="let squadra of squadre">
+      <button mat-button class="delete" title="Canella squadra" (click)="delete(squadra)"><mat-icon>backspace</mat-icon></button>
+      <a routerLink="/squadra/{{squadra?.id}}">
+        {{squadra?.nome}}
+      </a>
+    </mat-list-item>
+</mat-list>

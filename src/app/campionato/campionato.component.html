@@ -1,19 +1,35 @@
-<div>
-  <label>Campionato:
-    <mat-form-field class="campionato-detail-full-width">
-      <input matInput #campionatoAnno />
-    </mat-form-field>
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button mat-button (click)="add(campionatoAnno.value); campionatoAnno.value=''">
-    <mat-icon>check</mat-icon>
-  </button>
-</div>
-<mat-list role="list">
-  <mat-list-item role="listitem" *ngFor="let campionato of campionati">
-    <button mat-button class="delete" title="Cancella campionato" (click)="delete(campionato)"><mat-icon>backspace</mat-icon></button>
-    <a routerLink="/campionati/{{campionato?.id}}">
-      {{campionato?.anno}}
-    </a>
-  </mat-list-item>
-</mat-list>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Inserisci nuovo campionato
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <label>Campionato:
+      <mat-form-field class="campionato-detail-full-width">
+        <input matInput #campionatoAnno />
+      </mat-form-field>
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button mat-button (click)="add(campionatoAnno.value); campionatoAnno.value=''">
+      <mat-icon>check</mat-icon>
+    </button>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Lista campionati
+      </mat-panel-title>
+    </mat-expansion-panel-header>  
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let campionato of campionati">
+        <button mat-button class="delete" title="Cancella campionato" (click)="delete(campionato)"><mat-icon>backspace</mat-icon></button>
+        <a routerLink="/campionati/{{campionato?.id}}">
+          {{campionato?.anno}}
+        </a>
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+</mat-accordion>

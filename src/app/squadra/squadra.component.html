@@ -1,19 +1,40 @@
-<div>
-  <label>Nome squadra:
-    <mat-form-field class="squadra-detail-full-width">
-      <input matInput #squadraName />
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Inserisci nuova squadra
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field>
+      <mat-select #squadraCampionato placeholder="Campionato" name="campionatoId" [(value)]="selected">
+        <mat-option *ngFor="let campionato of campionati" [value]="campionato.id">
+          {{ campionato.anno }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-  </label>
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button mat-button (click)="add(squadraName.value); squadraName.value=''">
-    <mat-icon>check</mat-icon>
-  </button>
-</div>
-<mat-list role="list">
-  <mat-list-item role="listitem" *ngFor="let squadre of squadre">
-    <button mat-button class="delete" title="Canella squadra" (click)="delete(squadre)"><mat-icon>backspace</mat-icon></button>
-    <a routerLink="/squadra/{{squadre?.id}}">
-      {{squadre?.nome}}
-    </a>
-  </mat-list-item>
-</mat-list>
+    <mat-form-field class="squadra-detail-full-width">
+      <input placeholder="Nome squadra" matInput #squadraName />
+    </mat-form-field>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button mat-button (click)="add(squadraName.value, squadraCampionato.value); squadraName.value=''; squadraCampionato.value=''">
+      <mat-icon>check</mat-icon>
+    </button>
+  </mat-expansion-panel>
+<mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel  [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Lista squadre
+        </mat-panel-title>
+      </mat-expansion-panel-header>      
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let squadre of squadre">
+          <button mat-button class="delete" title="Canella squadra" (click)="delete(squadre)"><mat-icon>backspace</mat-icon></button>
+          <a routerLink="/squadra/{{squadre?.id}}">
+            {{squadre?.nome}}
+          </a>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>
