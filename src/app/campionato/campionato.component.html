@@ -33,3 +33,12 @@
     </mat-list>
   </mat-expansion-panel>
 </mat-accordion>
+<mat-tab-group>
+  <mat-tab *ngFor="let campionato of campionati" label="{{campionato?.anno}}" >
+    <mat-list>
+      <mat-list-item *ngFor="let sq of squadra | filterBy: filter_squadra(campionato)">
+        {{sq?.nome}}
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+</mat-tab-group>

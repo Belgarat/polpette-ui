@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Campionato} from './campionato.model';
+import { Campionato } from './campionato.model';
+import { Squadra } from '../squadra/squadra.model';
 import { ApiService } from '../api.service';
 
 @Component({
@@ -9,12 +10,15 @@ import { ApiService } from '../api.service';
 })
 export class CampionatoComponent implements OnInit {
   public campionati: Campionato[];
+  public squadra: Squadra[];
+  private filter: any = { campionatoId: '' };
 
   constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
     this.getCampionati();
+    this.apiService.getSquadre().subscribe(squadra => this.squadra = squadra);
   }
 
   getCampionati(): void {
@@ -28,6 +32,10 @@ export class CampionatoComponent implements OnInit {
       .subscribe(campionati => {
         this.campionati.push(campionati);
       });
+  }
+
+  filter_squadra(campionato){
+    return this.squadra.filter( x => x.campionatoId == campionato.id );
   }
 
   delete(campionato: Campionato): void {

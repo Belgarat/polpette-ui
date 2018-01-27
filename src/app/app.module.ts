@@ -17,6 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { CustomMaterialModule } from './custom-material.module';
 import { SquadraDetailComponent } from './squadra-detail/squadra-detail.component';
 
+import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
+
 @NgModule({
   declarations: [
     ViewsComponent,
@@ -33,7 +35,8 @@ import { SquadraDetailComponent } from './squadra-detail/squadra-detail.componen
     CustomMaterialModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    Ng2FilterPipeModule
   ],
   providers: [
     ApiService
