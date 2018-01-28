@@ -18,6 +18,7 @@ import { CustomMaterialModule } from './custom-material.module';
 import { SquadraDetailComponent } from './squadra-detail/squadra-detail.component';
 
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
+import { FilterCampionatoPipe } from './pipe/filterdata.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
     SquadraComponent,
     AppComponent,
     SquadraDetailComponent,
+    FilterCampionatoPipe
   ],
   imports: [
     BrowserModule,

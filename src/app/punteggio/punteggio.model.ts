@@ -1,6 +1,6 @@
 export class Punteggio {
-    "id": number;
-    "punteggio": "string";
-    "campionatoId": number;
-    "squadraId": number;
+    'id': string;
+    'punteggio': string;
+    'campionatoId': string;
+    'squadraId': string;
 }

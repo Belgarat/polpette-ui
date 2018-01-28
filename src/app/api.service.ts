@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Squadra } from './squadra/squadra.model';
 import { Campionato } from './campionato/campionato.model';
+import { Punteggio } from './punteggio/punteggio.model';
 
 var httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,16 +15,15 @@ var httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl:string = "http://localhost:3000/api/"
+    private serviceUrl = 'http://localhost:3000/api/';
 
-    constructor(private http: HttpClient){
-    }
+    constructor(private http: HttpClient) {}
 
     /** GESTIONE DELLE SQUADRE */
 
     /** GET squadre from the server */
     getSquadre (): Observable<Squadra[]> {
-        return this.http.get<Squadra[]>(this.serviceUrl+'squadre')
+        return this.http.get<Squadra[]>(this.serviceUrl + 'squadre')
         .pipe(
             tap(squadre => this.log(`fetched squadre`)),
             catchError(this.handleError('getsquadre', []))
@@ -32,7 +32,7 @@ export class ApiService {
 
     /** GET Squadra by id. Return `undefined` when id not found */
     getSquadraNo404<Data>(id: string): Observable<Squadra> {
-        const url = `${this.serviceUrl+'squadre'}/?id=${id}`;
+        const url = `${this.serviceUrl + 'squadre'}/?id=${id}`;
         return this.http.get<Squadra[]>(url)
         .pipe(
             map(squadre => squadre[0]), // returns a {0|1} element array
@@ -46,7 +46,7 @@ export class ApiService {
 
     /** GET Squadra by id. Will 404 if id not found */
     getSquadra(id: string): Observable<Squadra> {
-        const url = `${this.serviceUrl+'squadre'}/${id}`;
+        const url = `${this.serviceUrl + 'squadre'}/${id}`;
         return this.http.get<Squadra>(url).pipe(
         tap(_ => this.log(`fetched Squadra id=${id}`)),
         catchError(this.handleError<Squadra>(`getSquadra id=${id}`))
@@ -109,7 +109,7 @@ export class ApiService {
 
     /** GET campionati from the server */
     getCampionati (): Observable<Campionato[]> {
-        return this.http.get<Campionato[]>(this.serviceUrl+'campionati')
+        return this.http.get<Campionato[]>(this.serviceUrl + 'campionati')
         .pipe(
             tap(campionato => this.log(`fetched campionati`)),
             catchError(this.handleError('getCampionati', []))
@@ -159,11 +159,11 @@ export class ApiService {
             return of([]);
         }
         this.log('parameter ok: search in ' + object + ', field ' + field + ', term ' + term);
-        let filter = `{"where":{"${field}":{"like":"${term}"}}}`;
+        const filter = `{"where":{"${field}":{"like":"${term}"}}}`;
         console.log(JSON.stringify(filter));
-        return this.http.get<Campionato[]>(this.serviceUrl + object + '/?filter=' + filter).pipe(
+        return this.http.get<any[]>(this.serviceUrl + object + '/?filter=' + filter).pipe(
             tap(_ => this.log(`found campionati matching "${term}"`)),
-            catchError(this.handleError<Campionato[]>('searchcampionati', []))
+            catchError(this.handleError<any[]>('searchcampionati', []))
         );
     }
 
@@ -187,7 +187,7 @@ export class ApiService {
     /** DELETE: delete the squadra from the server */
     deleteCampionato (campionato: Campionato | string): Observable<Campionato> {
         const id = typeof campionato === 'string' ? campionato : campionato.id;
-        const url = `${this.serviceUrl+'campionati'}/${id}`;
+        const url = `${this.serviceUrl + 'campionati'}/${id}`;
 
         return this.http.delete<Campionato>(url, httpOptions).pipe(
             tap(_ => this.log(`deleted campionato id=${id}`)),
@@ -195,19 +195,43 @@ export class ApiService {
         );
     }
 
+    /** GESTIONE DEI PUNTEGGI */
 
-    list(path: string): Observable<Squadra[]>{
-        return this.http.get<Squadra[]>(this.serviceUrl+path)
-        /*let response;
-        if(path=="squadra"){
-            response = this.http.get(this.serviceUrl+path, {headers: this.getHeaders()})
-                            .map(res => JSON.stringify(res))
-                            .catch(this.handleError);
-        }*/
-        /*if(path=="tickets"){
-            response = this.lsTickets();
-        }
-        return response;*/
+    /** GET squadre from the server */
+    getPunteggi (): Observable<Punteggio[]> {
+        return this.http.get<Punteggio[]>(this.serviceUrl + 'punteggi')
+        .pipe(
+            tap(punteggi => this.log(`fetched punteggi`)),
+            catchError(this.handleError('getpunteggi', []))
+        );
+    }
+
+    /** GET campionati from the server */
+    getPunteggio (id: string): Observable<Punteggio> {
+        const url = `${this.serviceUrl + 'punteggi'}/${id}`;
+        return this.http.get<Punteggio>(url)
+        .pipe(
+            tap(punteggio => this.log(`fetched punteggi`)),
+            catchError(this.handleError<Punteggio>(`getPunteggio id=${id}`))
+        );
+    }
+
+    /** POST: add a new hero to the server */
+    addPunteggio (punteggio: Punteggio): Observable<Punteggio> {
+        return this.http.post<Punteggio>(this.serviceUrl + 'punteggi', punteggio, httpOptions).pipe(
+            tap((punteggio: Punteggio) => this.log(`added campionato w/ id=${punteggio.id}`)),
+            catchError(this.handleError<Punteggio>('addPunteggio'))
+        );
+    }
+
+
+    /** POST: add point to team */
+    changePunteggio (punteggio: Punteggio): Observable<Punteggio> {
+        console.log(punteggio);
+        return this.http.patch(this.serviceUrl + 'punteggi', punteggio, httpOptions).pipe(
+            tap(_ => this.log(`updated campionato id=${punteggio.id}`)),
+            catchError(this.handleError<any>('updateCampionato'))
+        );
     }
 
     /**
@@ -234,38 +258,5 @@ export class ApiService {
     private log(message: string) {
         console.log('CampionatoService: ' + message);
     }
-
-    /*lsTickets(){
-            this.http.get(this.serviceUrl+"/tickets", {headers: this.getHeaders()})
-                            .map(res => res.json())
-                            .subscribe(result => this.tickets_list = result);
-            return this.tickets_list;
-    }*/
-
-    /*private getHeaders(){
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        return headers;
-    }
-
-
-    private extractData(res: Response) {
-        let body = res.json();
-        return body.data || { };
-    }
-
-    private handleError (error: Response | any) {
-        // In a real world app, you might use a remote logging infrastructure
-        let errMsg: string;
-        if (error instanceof Response) {
-        const body = error.json() || '';
-        const err = body.error || JSON.stringify(body);
-        errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-        errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Observable.throw(errMsg);
-    }*/
 
 }
