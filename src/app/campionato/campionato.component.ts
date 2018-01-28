@@ -59,30 +59,18 @@ export class CampionatoComponent implements OnInit {
   }
 
   addPunteggio(squadra): any {
-    /*let point: Punteggio[];*/
     if (this.punteggi) {
       let found = this.punteggi.some(el => el.squadraId === squadra.id);
       if (!found) {
         let point: Punteggio[] = [];
-        point.push(Object({'campionatoId': squadra.campionatoId, 'squadraId': squadra.id, 'punteggio': '0' }));
-        this.apiService.addPunteggio(point[0]);
+        point.push({'campionatoId': squadra.campionatoId, 'squadraId': squadra.id, 'punteggio': '1' });
+        this.apiService.addPunteggio(point[0]).subscribe();
+        this.getPunteggi();
       }
       this.punteggi.filter(item => item.squadraId === squadra.id).map((el) => {
         el.punteggio = String((Number(el.punteggio) + 1));
         this.apiService.changePunteggio(el).subscribe();
       });
-      /*if (this.currentPoint.length === 0) {
-        console.log(this.currentPoint);
-        this.currentPoint.push(Object({'campionatoId': squadra.campionatoId, 'squadraId': squadra.id, 'punteggio': '0' }));
-        this.apiService.addPunteggio(this.currentPoint[0]);
-        return 0;
-      } else {
-        let num: number = (Number(point[0].punteggio) + 1);
-        point[0].punteggio = String(num);
-        console.log('Aggiornato', point);
-        this.apiService.changePunteggio(point[0]).subscribe();
-        return 0;
-      }*/
     }
   }
 

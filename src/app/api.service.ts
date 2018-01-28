@@ -227,7 +227,6 @@ export class ApiService {
 
     /** POST: add point to team */
     changePunteggio (punteggio: Punteggio): Observable<Punteggio> {
-        console.log(punteggio);
         return this.http.patch(this.serviceUrl + 'punteggi', punteggio, httpOptions).pipe(
             tap(_ => this.log(`updated campionato id=${punteggio.id}`)),
             catchError(this.handleError<any>('updateCampionato'))
