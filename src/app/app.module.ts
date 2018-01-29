@@ -19,6 +19,8 @@ import { SquadraDetailComponent } from './squadra-detail/squadra-detail.componen
 
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { FilterCampionatoPipe } from './pipe/filterdata.pipe';
+import { SortPipe } from './pipe/sort.pipe';
+import { SortNumPipe } from './pipe/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FilterCampionatoPipe } from './pipe/filterdata.pipe';
     SquadraComponent,
     AppComponent,
     SquadraDetailComponent,
-    FilterCampionatoPipe
+    FilterCampionatoPipe,
+    SortPipe,
+    SortNumPipe
   ],
   imports: [
     BrowserModule,

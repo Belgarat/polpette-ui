@@ -17,6 +17,8 @@ export class CampionatoComponent implements OnInit {
   public punteggi: Punteggio[];
   private currentPoint: Punteggio[];
 
+  private plusValue: string = '0';
+
   constructor(private apiService: ApiService) {
   }
 
@@ -63,12 +65,21 @@ export class CampionatoComponent implements OnInit {
       let found = this.punteggi.some(el => el.squadraId === squadra.id);
       if (!found) {
         let point: Punteggio[] = [];
-        point.push({'campionatoId': squadra.campionatoId, 'squadraId': squadra.id, 'punteggio': '1' });
+        point.push({'id': '', 'campionatoId': squadra.campionatoId, 'squadraId': squadra.id, 'punteggio': '1' });
         this.apiService.addPunteggio(point[0]).subscribe();
         this.getPunteggi();
       }
       this.punteggi.filter(item => item.squadraId === squadra.id).map((el) => {
         el.punteggio = String((Number(el.punteggio) + 1));
+        this.apiService.changePunteggio(el).subscribe();
+      });
+    }
+  }
+
+  minusPunteggio(squadra): any {
+    if (this.punteggi) {
+      this.punteggi.filter(item => item.squadraId === squadra.id).map((el) => {
+        el.punteggio = String((Number(el.punteggio) - 1));
         this.apiService.changePunteggio(el).subscribe();
       });
     }

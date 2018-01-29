@@ -139,6 +139,16 @@ export class ApiService {
         );
     }
 
+    /** GET Campionato by id. Will 404 if id not found */
+    getCurrentCampionato(): any {
+        const filter = `{"where":{"current":"1"}}`;
+        return this.http.get<Campionato>(this.serviceUrl + 'campionati' + '/?filter=' + filter).pipe(
+            tap(_ => this.log(`found campionati matching ""`)),
+            catchError(this.handleError<Campionato>('searchcampionati'))
+        );
+    }
+
+
     /* GET squadre whose name contains search term */
     searchcampionati(term: string): Observable<Campionato[]> {
         if (!term.trim()) {
@@ -160,7 +170,6 @@ export class ApiService {
         }
         this.log('parameter ok: search in ' + object + ', field ' + field + ', term ' + term);
         const filter = `{"where":{"${field}":{"like":"${term}"}}}`;
-        console.log(JSON.stringify(filter));
         return this.http.get<any[]>(this.serviceUrl + object + '/?filter=' + filter).pipe(
             tap(_ => this.log(`found campionati matching "${term}"`)),
             catchError(this.handleError<any[]>('searchcampionati', []))
@@ -218,12 +227,12 @@ export class ApiService {
 
     /** POST: add a new hero to the server */
     addPunteggio (punteggio: Punteggio): Observable<Punteggio> {
+        delete punteggio.id;
         return this.http.post<Punteggio>(this.serviceUrl + 'punteggi', punteggio, httpOptions).pipe(
             tap((punteggio: Punteggio) => this.log(`added campionato w/ id=${punteggio.id}`)),
             catchError(this.handleError<Punteggio>('addPunteggio'))
         );
     }
-
 
     /** POST: add point to team */
     changePunteggio (punteggio: Punteggio): Observable<Punteggio> {

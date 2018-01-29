@@ -17,6 +17,7 @@ const routes: Routes = [
     { path: 'squadra/:id', component: SquadraDetailComponent,  pathMatch: 'full' },
     { path: 'campionati', component: CampionatoComponent,  pathMatch: 'full' },
     { path: 'campionati/:id', component: CampionatoDetailComponent,  pathMatch: 'full' },
+    { path: 'punteggi', component: PunteggioComponent,  pathMatch: 'full' },
   ];
  
 @NgModule({
