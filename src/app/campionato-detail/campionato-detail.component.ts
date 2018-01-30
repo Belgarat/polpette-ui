@@ -13,7 +13,7 @@ import { Campionato } from '../campionato/campionato.model';
 })
 export class CampionatoDetailComponent implements OnInit {
   @Input() campionato: Campionato;
-  private squadre: Squadra[];
+  public squadre: Squadra[];
 
   constructor(
     private route: ActivatedRoute,

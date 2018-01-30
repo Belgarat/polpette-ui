@@ -15,7 +15,7 @@ var httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl = 'http://localhost:3000/api/';
+    private serviceUrl = 'http://eventmanager.stdout.it:3000/api/';
 
     constructor(private http: HttpClient) {}
 

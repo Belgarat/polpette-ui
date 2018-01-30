@@ -29,7 +29,7 @@ export class SquadraComponent implements OnInit {
     this.apiService.getSquadre().subscribe(squadre => this.squadre = squadre);
   }
 
-  add(nome: string, campionatoId: string, id: number): void {
+  add(nome: string, campionatoId: string): void {
     nome = nome.trim();
     if (!nome) { return; }
     this.apiService.addSquadra({ nome, campionatoId } as Squadra)

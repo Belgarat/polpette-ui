@@ -7,7 +7,7 @@ import { Router, ActivatedRoute, Params, Data } from '@angular/router';
   styleUrls: ['./views.component.css']
 })
 export class ViewsComponent implements OnInit {
-  private obj: String = "First value";
+  public obj: String = "First value";
   
   constructor(private route: ActivatedRoute, private router: Router) { }
 

@@ -6,7 +6,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field>
-      <mat-select #squadraCampionato placeholder="Campionato" name="campionatoId" [(value)]="selected">
+      <mat-select #squadraCampionato placeholder="Campionato" name="campionatoId">
         <mat-option *ngFor="let campionato of campionati" [value]="campionato.id">
           {{ campionato.anno }}
         </mat-option>

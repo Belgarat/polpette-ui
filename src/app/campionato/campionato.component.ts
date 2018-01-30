@@ -18,6 +18,7 @@ export class CampionatoComponent implements OnInit {
   private currentPoint: Punteggio[];
 
   private plusValue: string = '0';
+  public btnDisable = false;
 
   constructor(private apiService: ApiService) {
   }
@@ -61,31 +62,41 @@ export class CampionatoComponent implements OnInit {
   }
 
   addPunteggio(squadra): any {
+    this.btnDisable = true;
     if (this.punteggi) {
       let found = this.punteggi.some(el => el.squadraId === squadra.id);
       if (!found) {
         let point: Punteggio[] = [];
         point.push({'id': '', 'campionatoId': squadra.campionatoId, 'squadraId': squadra.id, 'punteggio': '1' });
-        this.apiService.addPunteggio(point[0]).subscribe();
-        this.getPunteggi();
+        this.apiService.addPunteggio(point[0]).subscribe(() => { 
+          this.btnDisable = false;
+          this.getPunteggi();
+        });
       }
       this.punteggi.filter(item => item.squadraId === squadra.id).map((el) => {
         el.punteggio = String((Number(el.punteggio) + 1));
-        this.apiService.changePunteggio(el).subscribe();
+        this.apiService.changePunteggio(el).subscribe(() => {
+          this.btnDisable = false;
+          this.getPunteggi();
+        });
       });
     }
   }
 
   minusPunteggio(squadra): any {
+    this.btnDisable = true;
     if (this.punteggi) {
       this.punteggi.filter(item => item.squadraId === squadra.id).map((el) => {
         el.punteggio = String((Number(el.punteggio) - 1));
-        this.apiService.changePunteggio(el).subscribe();
+        this.apiService.changePunteggio(el).subscribe(() => {
+          this.btnDisable = false;
+          this.getPunteggi();
+        });
       });
     }
   }
 
-  add(anno: string, id: number): void {
+  add(anno: string): void {
     anno = anno.trim();
     if (!anno) { return; }
     this.apiService.addCampionato({ anno } as Campionato)

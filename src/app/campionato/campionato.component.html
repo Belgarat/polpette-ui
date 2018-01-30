@@ -40,8 +40,8 @@
         <a routerLink="/squadra/{{sq?.id}}">
           {{sq?.nome}} ({{showPunteggio(sq?.id)}})
         </a>
-        <button mat-button title="Aggiungi 1 punto" (click)="addPunteggio(sq)"> + </button>
-        <button mat-button title="Aggiungi 1 punto" *ngIf="showPunteggio(sq?.id)>0" (click)="minusPunteggio(sq)"> -- </button>
+        <button mat-button title="Aggiungi 1 punto" (click)="addPunteggio(sq)" [disabled]="btnDisable"> + </button>
+        <button mat-button title="Aggiungi 1 punto" *ngIf="showPunteggio(sq?.id)>0" (click)="minusPunteggio(sq)" [disabled]="btnDisable"> -- </button>
       </mat-list-item>
     </mat-list>
   </mat-tab>
