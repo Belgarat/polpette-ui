@@ -17,7 +17,7 @@ export class PunteggioComponent implements OnInit {
   public campionati: Campionato[];
   public current: Campionato;
   displayedColumns = ['punteggio'];
-  dataSource = new MatTableDataSource(this.punteggi);
+  dataSource = new MatTableDataSource<Element>(this.punteggi);
 
 
   constructor(private apiService: ApiService) {

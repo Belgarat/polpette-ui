@@ -15,7 +15,7 @@ var httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl = 'http://eventmanager.stdout.it:3000/api/';
+    private serviceUrl = 'http://localhost:3000/api/';
 
     constructor(private http: HttpClient) {}
 
@@ -197,10 +197,21 @@ export class ApiService {
     deleteCampionato (campionato: Campionato | string): Observable<Campionato> {
         const id = typeof campionato === 'string' ? campionato : campionato.id;
         const url = `${this.serviceUrl + 'campionati'}/${id}`;
-
         return this.http.delete<Campionato>(url, httpOptions).pipe(
             tap(_ => this.log(`deleted campionato id=${id}`)),
             catchError(this.handleError<any>('deleteCampionato'))
+        );
+    }
+
+
+    /** PUT: set current campionato to the server */
+    setCurrentCampionato (campionato: Campionato | string): Observable<Campionato> {
+        const id = typeof campionato === 'string' ? campionato : campionato.id;
+        const url = `${this.serviceUrl + 'campionati'}/${id}/set-current`;
+
+        return this.http.put<Campionato>(url, httpOptions).pipe(
+            tap(_ => this.log(`Set current campionato id=${id}`)),
+            catchError(this.handleError<any>('setCurrentCampionato'))
         );
     }
 

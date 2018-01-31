@@ -19,6 +19,9 @@ export class CampionatoComponent implements OnInit {
 
   private plusValue: string = '0';
   public btnDisable = false;
+  public btnNewDisable = false;
+  public checked = true;
+  public current = 1;
 
   constructor(private apiService: ApiService) {
   }
@@ -99,15 +102,25 @@ export class CampionatoComponent implements OnInit {
   add(anno: string): void {
     anno = anno.trim();
     if (!anno) { return; }
-    this.apiService.addCampionato({ anno } as Campionato)
+    this.btnNewDisable = true;
+    this.checked ? this.current = 1 : this.current = 0;
+    this.apiService.addCampionato({ 'anno': anno, 'current': this.current } as Campionato)
       .subscribe(campionati => {
+        this.apiService.setCurrentCampionato(campionati).subscribe();
         this.campionati.push(campionati);
+        this.btnNewDisable = false;
       });
   }
 
   delete(campionato: Campionato): void {
-    this.campionati = this.campionati.filter(h => h !== campionato);
-    this.apiService.deleteCampionato(campionato).subscribe();
+    if(campionato.current !== 1){
+      this.campionati = this.campionati.filter(h => h !== campionato);
+      this.apiService.deleteCampionato(campionato).subscribe(() => {
+        this.getCampionati();
+      });
+    }else{
+      alert("Non è possibile eliminare il campionato corrente!");
+    }
   }
 
 

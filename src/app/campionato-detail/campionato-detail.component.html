@@ -2,6 +2,7 @@
   <mat-form-field class="campionato-detail-full-width">
     <input matInput placeholder="Nome campionato" [(ngModel)]="campionato.anno" [value]="campionato?.anno" name="anno" />
   </mat-form-field>
+  <mat-checkbox #campionatoCurrent [(ngModel)]="checked" name="current" [checked]="checked">Corrente</mat-checkbox>
 </form>
 <div class="button-row">
   <button (click)="goBack()" mat-raised-button>Go back</button>

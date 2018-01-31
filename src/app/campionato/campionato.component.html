@@ -5,13 +5,12 @@
         Inserisci nuovo campionato
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <label>Campionato:
       <mat-form-field class="campionato-detail-full-width">
-        <input matInput #campionatoAnno />
+        <input matInput #campionatoAnno placeholder="Nome campionato" />
       </mat-form-field>
-    </label>
+      <mat-checkbox #campionatoCurrent [(ngModel)]="checked" name="current" value="1" [checked]="checked">Corrente</mat-checkbox>
     <!-- (click) passes input value to add() and then clears the input -->
-    <button mat-button (click)="add(campionatoAnno.value); campionatoAnno.value=''">
+      <button [disabled]="btnNewDisable" mat-button (click)="add(campionatoAnno.value); campionatoAnno.value=''">
       <mat-icon>check</mat-icon>
     </button>
   </mat-expansion-panel>

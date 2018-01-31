@@ -14,6 +14,8 @@ import { Campionato } from '../campionato/campionato.model';
 export class CampionatoDetailComponent implements OnInit {
   @Input() campionato: Campionato;
   public squadre: Squadra[];
+  public checked = true;
+  public current = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +37,10 @@ export class CampionatoDetailComponent implements OnInit {
   getCampionato(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.apiService.getCampionato(id)
-      .subscribe(campionato => this.campionato = campionato);
+      .subscribe(campionato => {
+        this.campionato = campionato;
+        campionato.current === 0 ? this.checked = false : this.checked = true;
+      });
   }
 
   goBack(): void {
@@ -48,7 +53,11 @@ export class CampionatoDetailComponent implements OnInit {
   }
 
  save(): void {
+    this.checked == true ? this.campionato.current = 1 : this.campionato.current = 0;
     this.apiService.updateCampionato(this.campionato)
-      .subscribe(() => this.goBack());
+      .subscribe(() => {
+        this.apiService.setCurrentCampionato(this.campionato).subscribe();
+        this.goBack();
+      });
   }
 }
