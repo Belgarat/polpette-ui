@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ApiService } from '../api.service';
 import { Squadra } from '../squadra/squadra.model';
 import { Campionato } from '../campionato/campionato.model';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-squadra-detail',

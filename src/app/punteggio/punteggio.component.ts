@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Punteggio } from './punteggio.model';
 import { Campionato } from '../campionato/campionato.model';
 import { Squadra } from '../squadra/squadra.model';
 import { ApiService } from '../api.service';
 
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource, MatSort, MatSortable } from '@angular/material';
 import { Element } from '@angular/compiler';
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DataSource } from '@angular/cdk/collections';
 
 
 
@@ -22,7 +24,7 @@ export interface Element {
   styleUrls: ['./punteggio.component.css']
 })
 
-export class PunteggioComponent implements OnInit {
+export class PunteggioComponent implements OnInit, AfterViewInit {
   public punteggi: Punteggio[];
   public squadre: Squadra[];
   public campionati: Campionato[];
@@ -30,8 +32,15 @@ export class PunteggioComponent implements OnInit {
   displayedColumns = ['campionatoId', 'squadraId', 'punteggio'];
   dataSource: MatTableDataSource<Punteggio>;
 
+  @ViewChild(MatSort) sortD: MatSort;
 
   constructor(private apiService: ApiService) {
+  }
+
+  ngAfterViewInit() {
+    if ( this.dataSource ) {
+      this.dataSource.sort = this.sortD;
+    }
   }
 
   ngOnInit() {
@@ -43,7 +52,9 @@ export class PunteggioComponent implements OnInit {
   getPunteggi(): void {
     this.apiService.getPunteggi().subscribe(p => {
       this.punteggi = p;
-      this.dataSource = new MatTableDataSource(p);
+      this.dataSource = new MatTableDataSource();
+      this.dataSource.data = p;
+      this.dataSource.sort = this.sortD;
     });
   }
   getCurrentPunteggi() {
@@ -62,14 +73,17 @@ export class PunteggioComponent implements OnInit {
     });
   }
   resolveSqName(id) {
-    if(this.squadre){
+    if (this.squadre) {
       return this.squadre.filter(item => item.id === id).map(sq => sq.nome)[0];
     }
   }
   resolveCpName(id) {
-    if(this.campionati){
+    if (this.campionati) {
       return this.campionati.filter(item => item.id === id).map(cp => cp.anno)[0];
     }
+  }
+  sortData(e) {
+    this.dataSource.sort = this.sortD;
   }
 }
 

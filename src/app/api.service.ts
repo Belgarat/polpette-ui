@@ -221,7 +221,7 @@ export class ApiService {
 
     /** GET squadre from the server */
     getPunteggi (): Observable<Punteggio[]> {
-        return this.http.get<Punteggio[]>(this.serviceUrl + 'punteggi')
+        return this.http.get<Punteggio[]>(this.serviceUrl + 'punteggi' + '?filter[order]=punteggio DESC')
         .pipe(
             tap(punteggi => this.log(`fetched punteggi`)),
             catchError(this.handleError('getpunteggi', []))

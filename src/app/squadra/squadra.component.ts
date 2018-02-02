@@ -11,11 +11,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class SquadraComponent implements OnInit {
   public squadre: Squadra[];
-  public campionati: Campionato[]
+  public campionati: Campionato[];
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) {
-    
-  }
+  constructor(private apiService: ApiService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.getSquadre();
@@ -51,7 +49,7 @@ export class SquadraComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if ( result ) {
         this.delete(squadra);
       }
     });
@@ -60,7 +58,7 @@ export class SquadraComponent implements OnInit {
 }
 
 @Component({
-  selector: 'dialog-dialog',
+  selector: 'app-dialog-dialog',
   templateUrl: './dialog-dialog.html',
 })
 export class DialogOverviewDialog {
@@ -72,5 +70,4 @@ export class DialogOverviewDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }
