@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Squadra } from './squadra.model';
 import { Campionato } from '../campionato/campionato.model';
 import { ApiService } from '../api.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-squadra',
@@ -12,7 +13,7 @@ export class SquadraComponent implements OnInit {
   public squadre: Squadra[];
   public campionati: Campionato[]
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, public dialog: MatDialog) {
     
   }
 
@@ -41,6 +42,35 @@ export class SquadraComponent implements OnInit {
   delete(squadra: Squadra): void {
     this.squadre = this.squadre.filter(h => h !== squadra);
     this.apiService.deleteSquadra(squadra).subscribe();
+  }
+
+  openDialog(squadra): void {
+    let dialogRef = this.dialog.open(DialogOverviewDialog, {
+      width: '250px',
+      data: { nome: squadra.nome }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.delete(squadra);
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'dialog-dialog',
+  templateUrl: './dialog-dialog.html',
+})
+export class DialogOverviewDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

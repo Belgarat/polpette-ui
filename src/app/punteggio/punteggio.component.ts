@@ -5,19 +5,30 @@ import { Squadra } from '../squadra/squadra.model';
 import { ApiService } from '../api.service';
 
 import {MatTableDataSource} from '@angular/material';
+import { Element } from '@angular/compiler';
+
+
+
+export interface Element {
+  'id': string;
+  'punteggio': string;
+  'campionatoId': string;
+  'squadraId': string;
+}
 
 @Component({
   selector: 'app-punteggio',
   templateUrl: './punteggio.component.html',
   styleUrls: ['./punteggio.component.css']
 })
+
 export class PunteggioComponent implements OnInit {
   public punteggi: Punteggio[];
   public squadre: Squadra[];
   public campionati: Campionato[];
   public current: Campionato;
-  displayedColumns = ['punteggio'];
-  dataSource = new MatTableDataSource<Element>(this.punteggi);
+  displayedColumns = ['campionatoId', 'squadraId', 'punteggio'];
+  dataSource: MatTableDataSource<Punteggio>;
 
 
   constructor(private apiService: ApiService) {
@@ -30,7 +41,10 @@ export class PunteggioComponent implements OnInit {
     this.getCurrentCampionato();
   }
   getPunteggi(): void {
-    this.apiService.getPunteggi().subscribe(p => this.punteggi = p);
+    this.apiService.getPunteggi().subscribe(p => {
+      this.punteggi = p;
+      this.dataSource = new MatTableDataSource(p);
+    });
   }
   getCurrentPunteggi() {
     return this.punteggi.filter(e => e.campionatoId === this.current[0].id);
@@ -59,6 +73,3 @@ export class PunteggioComponent implements OnInit {
   }
 }
 
-export interface Element {
-  punteggio: string;
-}

@@ -9,6 +9,8 @@ import { Squadra } from './squadra/squadra.model';
 import { Campionato } from './campionato/campionato.model';
 import { Punteggio } from './punteggio/punteggio.model';
 
+
+
 var httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

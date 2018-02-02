@@ -11,7 +11,7 @@ import { ViewsComponent } from './views/views.component';
 import { CampionatoComponent } from './campionato/campionato.component';
 import { CampionatoDetailComponent } from './campionato-detail/campionato-detail.component';
 import { PunteggioComponent } from './punteggio/punteggio.component';
-import { SquadraComponent } from './squadra/squadra.component';
+import { SquadraComponent, DialogOverviewDialog } from './squadra/squadra.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CustomMaterialModule } from './custom-material.module';
@@ -33,7 +33,8 @@ import { SortNumPipe } from './pipe/sort.pipe';
     SquadraDetailComponent,
     FilterCampionatoPipe,
     SortPipe,
-    SortNumPipe
+    SortNumPipe,
+    DialogOverviewDialog
   ],
   imports: [
     BrowserModule,
@@ -44,6 +45,7 @@ import { SortNumPipe } from './pipe/sort.pipe';
     BrowserAnimationsModule,
     Ng2FilterPipeModule
   ],
+  entryComponents: [ DialogOverviewDialog ],
   providers: [
     ApiService
   ],
