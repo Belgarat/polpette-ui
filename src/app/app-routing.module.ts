@@ -10,6 +10,7 @@ import { SquadraComponent } from './squadra/squadra.component';
 import { SquadraDetailComponent } from './squadra-detail/squadra-detail.component';
  
 const routes: Routes = [
+    { path: '',   redirectTo: '/punteggi', pathMatch: 'full' },
     { path: 'views', component: ViewsComponent,  pathMatch: 'full' },
     { path: 'views/:obj', component: ViewsComponent, pathMatch: 'full' },
     { path: 'campionato', component: CampionatoComponent,  pathMatch: 'full' },
