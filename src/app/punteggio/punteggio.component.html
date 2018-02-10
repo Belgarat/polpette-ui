@@ -1,5 +1,5 @@
 <div *ngIf="dataSource" class="punteggi-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="punteggio" matSortDirection="asc" matSortDisableClear>
+  <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="punteggio" matSortDirection="desc" matSortDisableClear>
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->

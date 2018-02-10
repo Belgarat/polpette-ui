@@ -13,7 +13,7 @@ export class SquadraComponent implements OnInit {
   public squadre: Squadra[];
   public campionati: Campionato[];
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) {}
+  constructor(private apiService: ApiService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getSquadre();
@@ -49,7 +49,7 @@ export class SquadraComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if ( result ) {
+      if (result) {
         this.delete(squadra);
       }
     });

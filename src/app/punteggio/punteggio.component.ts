@@ -6,8 +6,10 @@ import { ApiService } from '../api.service';
 
 import { MatTableDataSource, MatSort, MatSortable } from '@angular/material';
 import { Element } from '@angular/compiler';
-import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AfterViewInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DataSource } from '@angular/cdk/collections';
+import { Subscription } from 'rxjs/Subscription';
+import { TimerObservable } from "rxjs/observable/TimerObservable";
 
 
 
@@ -24,13 +26,14 @@ export interface Element {
   styleUrls: ['./punteggio.component.css']
 })
 
-export class PunteggioComponent implements OnInit, AfterViewInit {
+export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
   public punteggi: Punteggio[];
   public squadre: Squadra[];
   public campionati: Campionato[];
   public current: Campionato;
   displayedColumns = ['campionatoId', 'squadraId', 'punteggio'];
   dataSource: MatTableDataSource<Punteggio>;
+  private subscription: Subscription;
 
   @ViewChild(MatSort) sortD: MatSort;
 
@@ -48,6 +51,15 @@ export class PunteggioComponent implements OnInit, AfterViewInit {
     this.getSquadre();
     this.getCampionati();
     this.getCurrentCampionato();
+    let timer = TimerObservable.create(10000, 30000);
+    this.subscription = timer.subscribe( () => {
+      this.getSquadre();
+      this.getPunteggi();
+    });
+
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
   getPunteggi(): void {
     this.apiService.getPunteggi().subscribe(p => {
