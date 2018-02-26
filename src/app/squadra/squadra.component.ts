@@ -39,7 +39,11 @@ export class SquadraComponent implements OnInit {
 
   delete(squadra: Squadra): void {
     this.squadre = this.squadre.filter(h => h !== squadra);
-    this.apiService.deleteSquadra(squadra).subscribe();
+    this.apiService.deletePunteggio(squadra).subscribe(
+      (sq) => console.log(sq),
+      (err) => console.log(err),
+      () => this.apiService.deleteSquadra(squadra).subscribe()
+    );
   }
 
   openDialog(squadra): void {

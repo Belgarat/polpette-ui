@@ -255,6 +255,19 @@ export class ApiService {
         );
     }
 
+    /** DELETE: delete the punteggio from the server */
+    deletePunteggio (squadra: Squadra | string): Observable<Squadra> {
+        const id = typeof squadra === 'string' ? squadra : squadra.id;
+        //const url = `${this.serviceUrl+'punteggi'}`;
+        //const filter = `{"where":{"squadraId": "${id}"}}`;
+        const url = `${this.serviceUrl+'punteggi' + '/' + id + '/delete-punteggio-by-id-squadra'}`;
+
+        return this.http.delete<Squadra>(url, httpOptions).pipe(
+            tap(_ => this.log(`deleted punteggio id=${id}`)),
+            catchError(this.handleError<any>('deletePunteggio'))
+        );
+    }
+
     /**
      * Handle Http operation that failed.
      * Let the app continue.
