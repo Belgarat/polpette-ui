@@ -17,7 +17,7 @@ var httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl = 'http://eventmanager.stdout.it:3000/api/';
+    private serviceUrl = 'http://10.121.1.27:3000/api/';
 
     constructor(private http: HttpClient) {}
 
@@ -100,7 +100,14 @@ export class ApiService {
     deleteSquadra (squadra: Squadra | string): Observable<Squadra> {
         const id = typeof squadra === 'string' ? squadra : squadra.id;
         const url = `${this.serviceUrl+'squadre'}/${id}`;
-
+        let delId = [];
+        let punt = this.getPunteggi().subscribe(punt => {
+            punt.map( row => {
+                if(row.squadraId === id){
+                    this.deletePunteggio(row.id).subscribe();
+                }
+            })
+        });
         return this.http.delete<Squadra>(url, httpOptions).pipe(
             tap(_ => this.log(`deleted hero id=${id}`)),
             catchError(this.handleError<any>('deleteSquadra'))
@@ -258,9 +265,8 @@ export class ApiService {
     /** DELETE: delete the punteggio from the server */
     deletePunteggio (squadra: Squadra | string): Observable<Squadra> {
         const id = typeof squadra === 'string' ? squadra : squadra.id;
-        //const url = `${this.serviceUrl+'punteggi'}`;
-        //const filter = `{"where":{"squadraId": "${id}"}}`;
-        const url = `${this.serviceUrl+'punteggi' + '/' + id + '/delete-punteggio-by-id-squadra'}`;
+        console.log("Id classifica: " + id);
+        const url = `${this.serviceUrl+'punteggi/' + id}`;
 
         return this.http.delete<Squadra>(url, httpOptions).pipe(
             tap(_ => this.log(`deleted punteggio id=${id}`)),

@@ -39,10 +39,10 @@ export class SquadraComponent implements OnInit {
 
   delete(squadra: Squadra): void {
     this.squadre = this.squadre.filter(h => h !== squadra);
-    this.apiService.deletePunteggio(squadra).subscribe(
+    this.apiService.deleteSquadra(squadra).subscribe(
       (sq) => console.log(sq),
-      (err) => console.log(err),
-      () => this.apiService.deleteSquadra(squadra).subscribe()
+      (err) => console.log(err)
+       //() => this.apiService.deleteSquadra(squadra).subscribe()
     );
   }
 
