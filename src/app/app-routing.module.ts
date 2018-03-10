@@ -8,6 +8,7 @@ import { CampionatoDetailComponent } from './campionato-detail/campionato-detail
 import { PunteggioComponent } from './punteggio/punteggio.component';
 import { SquadraComponent } from './squadra/squadra.component';
 import { SquadraDetailComponent } from './squadra-detail/squadra-detail.component';
+import { SlidegalleryComponent } from './slidegallery/slidegallery.component';
  
 const routes: Routes = [
     { path: '',   redirectTo: '/punteggi', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'campionati', component: CampionatoComponent,  pathMatch: 'full' },
     { path: 'campionati/:id', component: CampionatoDetailComponent,  pathMatch: 'full' },
     { path: 'punteggi', component: PunteggioComponent,  pathMatch: 'full' },
+    { path: 'gallery', component: SlidegalleryComponent,  pathMatch: 'full' },
   ];
  
 @NgModule({

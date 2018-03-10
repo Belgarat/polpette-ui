@@ -8,6 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Squadra } from './squadra/squadra.model';
 import { Campionato } from './campionato/campionato.model';
 import { Punteggio } from './punteggio/punteggio.model';
+import { Slidegallery } from './slidegallery/slidegallery.model';
 
 
 
@@ -20,6 +21,15 @@ export class ApiService {
     private serviceUrl = 'http://10.121.1.27:3000/api/';
 
     constructor(private http: HttpClient) {}
+
+    /** GET squadre from the server */
+    getImages (container: String): Observable<Slidegallery[]> {
+        return this.http.get<Slidegallery[]>(this.serviceUrl + 'gallery' + '/' + container + '/' + 'files')
+        .pipe(
+            tap(container => this.log(`fetched container`)),
+            catchError(this.handleError('getcontainer', []))
+        );
+    }
 
     /** GESTIONE DELLE SQUADRE */
 

@@ -22,6 +22,9 @@ import { FilterCampionatoPipe } from './pipe/filterdata.pipe';
 import { SortPipe } from './pipe/sort.pipe';
 import { SortNumPipe } from './pipe/sort.pipe';
 
+import { CarouselModule } from 'ng2-slideshow';
+import { SlidegalleryComponent } from './slidegallery/slidegallery.component';
+
 @NgModule({
   declarations: [
     ViewsComponent,
@@ -34,7 +37,8 @@ import { SortNumPipe } from './pipe/sort.pipe';
     FilterCampionatoPipe,
     SortPipe,
     SortNumPipe,
-    DialogOverviewDialog
+    DialogOverviewDialog,
+    SlidegalleryComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,8 @@ import { SortNumPipe } from './pipe/sort.pipe';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    Ng2FilterPipeModule
+    Ng2FilterPipeModule,
+    CarouselModule
   ],
   entryComponents: [ DialogOverviewDialog ],
   providers: [
