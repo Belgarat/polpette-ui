@@ -22,7 +22,7 @@ import { FilterCampionatoPipe } from './pipe/filterdata.pipe';
 import { SortPipe } from './pipe/sort.pipe';
 import { SortNumPipe } from './pipe/sort.pipe';
 
-import { CarouselModule } from 'ng2-slideshow';
+import { SlideshowModule } from 'ng-simple-slideshow';
 import { SlidegalleryComponent } from './slidegallery/slidegallery.component';
 
 @NgModule({
@@ -48,7 +48,8 @@ import { SlidegalleryComponent } from './slidegallery/slidegallery.component';
     FormsModule,
     BrowserAnimationsModule,
     Ng2FilterPipeModule,
-    CarouselModule
+    SlideshowModule
+
   ],
   entryComponents: [ DialogOverviewDialog ],
   providers: [

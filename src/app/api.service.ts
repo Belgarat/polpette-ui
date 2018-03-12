@@ -18,7 +18,7 @@ var httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl = 'http://10.121.1.27:3000/api/';
+    private serviceUrl = 'http://localhost:3000/api/';
 
     constructor(private http: HttpClient) {}
 
@@ -26,7 +26,7 @@ export class ApiService {
     getImages (container: String): Observable<Slidegallery[]> {
         return this.http.get<Slidegallery[]>(this.serviceUrl + 'gallery' + '/' + container + '/' + 'files')
         .pipe(
-            tap(container => this.log(`fetched container`)),
+            tap(container => this.log(`fetched container` + container)),
             catchError(this.handleError('getcontainer', []))
         );
     }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
-import { Settings, Image } from 'ng2-slideshow';
+import { Slidegallery } from '../slidegallery/slidegallery.model';
 
 @Component({
   selector: 'app-slidegallery',
@@ -9,13 +10,24 @@ import { Settings, Image } from 'ng2-slideshow';
 })
 
 export class SlidegalleryComponent implements OnInit {
-  settings: Settings;
-  images: Image[];
+
+  images: Slidegallery[];
+  public listImage = [];
+  @Input() test: number;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.apiService.getImages('gallery1').subscribe(list => console.log(list));
+    this.loadImageList();
+    this.test = 2;
+  }
+
+  loadImageList() {
+    this.apiService.getImages('gallery1').subscribe( (list) => {
+      this.images = list;
+      this.images.map( i => this.listImage.push("http://localhost/gallery1/" + i.name));
+      console.log(this.listImage);
+    });
   }
 
 }

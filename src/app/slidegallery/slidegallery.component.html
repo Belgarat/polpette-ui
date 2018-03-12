@@ -1,1 +1,2 @@
-<ng2-slideshow [IMAGES]="images" [SETTINGS]="settings" (onclick)=handler($event)></ng2-slideshow>
+
+<slideshow *ngIf="images" [showDots]="true" [debug]="false" [autoPlay]="true" [imageUrls]="listImage"></slideshow>
