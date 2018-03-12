@@ -1,7 +1,9 @@
 import { map } from 'rxjs/operators';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Slidegallery } from '../slidegallery/slidegallery.model';
+import { Subscription } from 'rxjs/Subscription';
+import { TimerObservable } from "rxjs/observable/TimerObservable";
 
 @Component({
   selector: 'app-slidegallery',
@@ -9,17 +11,25 @@ import { Slidegallery } from '../slidegallery/slidegallery.model';
   styleUrls: ['./slidegallery.component.css']
 })
 
-export class SlidegalleryComponent implements OnInit {
+export class SlidegalleryComponent implements OnInit, OnDestroy {
 
   images: Slidegallery[];
   public listImage = [];
   @Input() test: number;
+  public subscription: Subscription;
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
     this.loadImageList();
-    this.test = 2;
+    let timer = TimerObservable.create(10000, 30000);
+    this.subscription = timer.subscribe( () => {
+      this.loadImageList();
+    });
+    
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   loadImageList() {
