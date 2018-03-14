@@ -15,7 +15,7 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
 
   images: Slidegallery[];
   public listImage = [];
-  @Input() test: number;
+  public test: boolean = false;
   public subscription: Subscription;
 
   constructor(private apiService: ApiService) { }
@@ -24,6 +24,7 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
     this.loadImageList();
     let timer = TimerObservable.create(10000, 30000);
     this.subscription = timer.subscribe( () => {
+      this.test = false;
       this.loadImageList();
     });
     
@@ -37,7 +38,7 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
     this.apiService.getImages('gallery1').subscribe( (list) => {
       this.images = list;
       this.images.map( i => this.listImage.push("http://10.121.1.27/gallery1/" + i.name));
-      console.log(this.listImage);
+      this.test = true;
     });
   }
 
