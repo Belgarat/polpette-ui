@@ -1,6 +1,7 @@
-{
-  "name": "Paul",
-  "favoriteColor": "green",
-  "google": "https://google.com",
-  "ng4_configure_repo": "https://github.com/mcdonaldp2/ng4-configure"
-}
+[
+    {
+      "appTitle": "Campionato Polpette 2018",
+      "apiUrl": "http://10.100.11.11:3000/api/",
+      "imageUrl": "http://10.100.11.11/gallery1/"
+    }
+]

@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { Slidegallery } from '../slidegallery/slidegallery.model';
 import { Subscription } from 'rxjs/Subscription';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { APP_SETTINGS } from '../../settings/index';
 
 @Component({
   selector: 'app-slidegallery',
@@ -27,7 +28,6 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
       this.test = false;
       this.loadImageList();
     });
-    
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -37,7 +37,7 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
     this.listImage = [];
     this.apiService.getImages('gallery1').subscribe( (list) => {
       this.images = list;
-      this.images.map( i => this.listImage.push("http://192.168.1.100/gallery1/" + i.name));
+      this.images.map( i => this.listImage.push(APP_SETTINGS.imageUrl + i.name));
       this.test = true;
     });
   }

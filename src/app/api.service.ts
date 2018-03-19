@@ -1,3 +1,4 @@
+import { APP_SETTINGS } from './../settings/settings';
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpRequest } from '@angular/common/http';
 
@@ -18,7 +19,7 @@ var httpOptions = {
 
 @Injectable()
 export class ApiService {
-    private serviceUrl = 'http://localhost:3000/api/';
+    private serviceUrl = APP_SETTINGS.apiUrl;
 
     constructor(private http: HttpClient) {}
 
