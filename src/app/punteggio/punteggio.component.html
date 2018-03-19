@@ -1,25 +1,49 @@
-<div *ngIf="dataSource" class="punteggi-container mat-elevation-z8">
-  <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="punteggio" matSortDirection="desc" matSortDisableClear>
+<mat-grid-list cols="2" rowHeight="800px">
+  <mat-grid-tile>
+    <div *ngIf="dataSource" class="punteggi-container mat-elevation-z8">
+      <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="punteggio" matSortDirection="desc" matSortDisableClear>
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
 
-    <ng-container matColumnDef="campionatoId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Campionato </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{resolveCpName(element.campionatoId)}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="seqNo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> N. </mat-header-cell>
+            <mat-cell *matCellDef="let element;let i = index"> {{ i+1 }} </mat-cell>
+          </ng-container>
+        
 
-    <ng-container matColumnDef="squadraId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Squadra </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{resolveSqName(element.squadraId)}} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="squadraId">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Squadra </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{resolveSqName(element.squadraId)}} </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="punteggio">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Punteggio </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.punteggio }} </mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="punteggio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Punteggio </mat-header-cell>
+          <mat-cell style="text-align: right;" *matCellDef="let element"> {{ element.punteggio }} </mat-cell>
+        </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-</div>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="14"></mat-paginator>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <table width="100%">
+      <tr>
+        <td>
+          <!-- Inizio codice ilMeteo.it -->
+          <iframe width="98%" height="239" scrolling="no" frameborder="no" noresize="noresize" src="http://www.ilmeteo.it/box/previsioni.php?citta=6759&type=day1&width=500&ico=1&lang=ita&days=6&font=Arial&fontsize=12&bg=FFFFFF&fg=000000&bgtitle=CCD9D6&fgtitle=FFFFFF&bgtab=F0F0F0&fglink=1773C2"></iframe>
+          <!-- Fine codice ilMeteo.it -->
+        </td>
+      </tr>
+      <tr>
+          <td>
+            <!-- Inizio codice ilMeteo.it -->
+            <iframe width="98%" height="239" scrolling="no" frameborder="no" noresize="noresize" src="http://www.ilmeteo.it/box/previsioni.php?citta=69&type=day1&width=500&ico=1&lang=ita&days=6&font=Arial&fontsize=12&bg=FFFFFF&fg=000000&bgtitle=CCD9D6&fgtitle=FFFFFF&bgtab=F0F0F0&fglink=1773C2"></iframe>
+            <!-- Fine codice ilMeteo.it -->            
+          </td>
+        </tr>
+    </table>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -11,9 +11,9 @@
 <h1>Squadre di questo campionato:</h1>
 <mat-list role="list">
   <mat-list-item role="listitem" *ngFor="let squadra of squadre">
-      <button mat-button class="delete" title="Canella squadra" (click)="delete(squadra)"><mat-icon>backspace</mat-icon></button>
-      <a routerLink="/squadra/{{squadra?.id}}">
-        {{squadra?.nome}}
-      </a>
-    </mat-list-item>
+    <button mat-button class="delete" title="Canella squadra" (click)="delete(squadra)"><mat-icon>backspace</mat-icon></button>
+    <a routerLink="/squadra/{{squadra?.id}}">
+      {{squadra?.nome}}
+    </a>
+  </mat-list-item>
 </mat-list>

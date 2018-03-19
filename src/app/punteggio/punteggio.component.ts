@@ -4,7 +4,7 @@ import { Campionato } from '../campionato/campionato.model';
 import { Squadra } from '../squadra/squadra.model';
 import { ApiService } from '../api.service';
 
-import { MatTableDataSource, MatSort, MatSortable } from '@angular/material';
+import { MatTableDataSource, MatSort, MatSortable, MatPaginator } from '@angular/material';
 import { Element } from '@angular/compiler';
 import { AfterViewInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DataSource } from '@angular/cdk/collections';
@@ -31,17 +31,21 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
   public squadre: Squadra[];
   public campionati: Campionato[];
   public current: Campionato;
-  displayedColumns = ['campionatoId', 'squadraId', 'punteggio'];
+  displayedColumns = ['seqNo', 'squadraId', 'punteggio'];
   dataSource: MatTableDataSource<Punteggio>;
   private subscription: Subscription;
+  private page_subscription: Subscription;
 
   @ViewChild(MatSort) sortD: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private apiService: ApiService) {
   }
 
   ngAfterViewInit() {
+    this.getPunteggi();
     if ( this.dataSource ) {
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sortD;
     }
   }
@@ -52,20 +56,27 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getCampionati();
     this.getCurrentCampionato();
     let timer = TimerObservable.create(10000, 30000);
+    let page_timer = TimerObservable.create(5000, 5000);
     this.subscription = timer.subscribe( () => {
       this.getSquadre();
       this.getPunteggi();
     });
+    this.page_subscription = page_timer.subscribe( () => {
+      this.cnext();
+    });
+
 
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.page_subscription.unsubscribe();
   }
   getPunteggi(): void {
     this.apiService.getPunteggi().subscribe(p => {
       this.punteggi = p;
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = p;
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sortD;
     });
   }
@@ -97,5 +108,11 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
   sortData(e) {
     this.dataSource.sort = this.sortD;
   }
+  cnext(){
+    if(this.paginator.pageIndex === this.paginator.getNumberOfPages()){
+      this.paginator.firstPage();
+    }else{
+      this.paginator.nextPage();
+    }
+  }
 }
-
