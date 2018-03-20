@@ -1,5 +1,5 @@
 <mat-grid-list cols="2" rowHeight="800px">
-  <mat-grid-tile>
+  <mat-grid-tile id="classifica">
     <div *ngIf="dataSource" class="punteggi-container mat-elevation-z8">
       <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="punteggio" matSortDirection="desc" matSortDisableClear>
 

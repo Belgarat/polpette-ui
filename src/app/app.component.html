@@ -1,12 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    {{ title }}
-  </h1>
-</div>
-<button mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon>more_vert</mat-icon>
-</button>
+<mat-grid-list cols="12" rowHeight="2:1">
+  <mat-grid-tile colspan="11">
+    <div style="text-align:center">
+      <h1>
+        {{ title }}
+      </h1>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>  
+  </mat-grid-tile>
+</mat-grid-list>
 <mat-menu #menu="matMenu">
   <li mat-menu-item>
     <mat-icon>home</mat-icon>
