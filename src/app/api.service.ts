@@ -4,12 +4,14 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpRequest } from '@angular/com
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, filter } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Squadra } from './squadra/squadra.model';
 import { Campionato } from './campionato/campionato.model';
 import { Punteggio } from './punteggio/punteggio.model';
 import { Slidegallery } from './slidegallery/slidegallery.model';
+import { Subject } from 'rxjs/Subject';
 
 
 
@@ -43,6 +45,7 @@ export class ApiService {
         );
     }
 
+    
     /** GET Squadra by id. Return `undefined` when id not found */
     getSquadraNo404<Data>(id: string): Observable<Squadra> {
         const url = `${this.serviceUrl + 'squadre'}/?id=${id}`;
@@ -77,6 +80,24 @@ export class ApiService {
             catchError(this.handleError<Squadra[]>('searchsquadre', []))
         );
     }
+
+    /* GET squadre whose name contains search term */
+    searchByForm(term: Observable<string>) {
+        console.log(term);
+        return term.pipe(
+            debounceTime(400),
+            distinctUntilChanged(),
+            switchMap(term => this.findSquadre(term))
+        );
+    }
+
+    findSquadre(term: string): Observable<Squadra[]> {
+        return this.http.get<Squadra[]>(this.serviceUrl + 'squadre')
+        .pipe(
+            map(e => e.filter(el => el.nome.toLocaleLowerCase().indexOf(term) > -1))
+        );    
+    }
+
     /*{"where":{"campionatoId":{"like":"5a6a3e710d86ee370314f41e"}}}*/
     /* GET squadre whose name contains search term */
     filtersquadre(term: string): Observable<Squadra[]> {

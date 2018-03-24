@@ -32,15 +32,18 @@
     </mat-list>
   </mat-expansion-panel>
 </mat-accordion>
+<mat-form-field>
+  <input matInput (keyup)="searchTerm$.next($event.target.value)" placeholder="Filter">
+</mat-form-field>
 <mat-tab-group *ngIf="campionati">
   <mat-tab *ngFor="let campionato of campionati | sortnum: ['current']" label="{{campionato?.anno}}" >
-    <mat-list *ngIf="squadra">
+    <mat-list dense *ngIf="squadra">
       <mat-list-item *ngFor="let sq of squadra | filtercampionato: campionato.id">
+        <button mat-button title="Aggiungi 1 punto" (click)="addPunteggio(sq)" [disabled]="btnDisable"><mat-icon matListIcon>add</mat-icon></button>
+        <button mat-button title="Aggiungi 1 punto" *ngIf="showPunteggio(sq?.id)>0" (click)="minusPunteggio(sq)" [disabled]="btnDisable"><mat-icon matListIcon>remove</mat-icon></button>    
         <a routerLink="/squadra/{{sq?.id}}">
           {{sq?.nome}} ({{showPunteggio(sq?.id)}})
         </a>
-        <button mat-button title="Aggiungi 1 punto" (click)="addPunteggio(sq)" [disabled]="btnDisable"> + </button>
-        <button mat-button title="Aggiungi 1 punto" *ngIf="showPunteggio(sq?.id)>0" (click)="minusPunteggio(sq)" [disabled]="btnDisable"> -- </button>
       </mat-list-item>
     </mat-list>
   </mat-tab>

@@ -5,6 +5,8 @@ import { Squadra } from '../squadra/squadra.model';
 import { Punteggio } from './../punteggio/punteggio.model';
 import { ApiService } from '../api.service';
 import { isString } from 'util';
+import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-campionato',
@@ -22,8 +24,15 @@ export class CampionatoComponent implements OnInit {
   public btnNewDisable = false;
   public checked = true;
   public current = 1;
+  private oldFilter = "";
+  searchTerm$ = new Subject<string>();
 
   constructor(private apiService: ApiService) {
+    this.apiService.searchByForm(this.searchTerm$)
+      .subscribe(results => {
+        console.log(results)
+        this.squadra = results;
+      });
   }
 
   ngOnInit() {
@@ -121,6 +130,19 @@ export class CampionatoComponent implements OnInit {
     }else{
       alert("Non è possibile eliminare il campionato corrente!");
     }
+  }
+
+  applyFilter(filterValue: string) {
+    /*filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    if(filterValue.length < this.oldFilter.length) {
+      this.apiService.getSquadre().subscribe(squadra => {
+        this.squadra = squadra.filter(e => e.nome.toLocaleLowerCase().indexOf(filterValue) > -1);
+      });
+    }else{
+      this.squadra = this.squadra.filter(e => e.nome.toLocaleLowerCase().indexOf(filterValue) > -1);
+    }
+    this.oldFilter = filterValue;*/
   }
 
 
