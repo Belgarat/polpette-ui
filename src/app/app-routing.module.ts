@@ -9,7 +9,7 @@ import { PunteggioComponent } from './punteggio/punteggio.component';
 import { SquadraComponent } from './squadra/squadra.component';
 import { SquadraDetailComponent } from './squadra-detail/squadra-detail.component';
 import { SlidegalleryComponent } from './slidegallery/slidegallery.component';
- 
+
 const routes: Routes = [
     { path: '',   redirectTo: '/punteggi', pathMatch: 'full' },
     { path: 'views', component: ViewsComponent,  pathMatch: 'full' },
@@ -22,7 +22,7 @@ const routes: Routes = [
     { path: 'punteggi', component: PunteggioComponent,  pathMatch: 'full' },
     { path: 'gallery', component: SlidegalleryComponent,  pathMatch: 'full' },
   ];
- 
+
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
   exports: [ RouterModule ]

@@ -1,7 +1,8 @@
 [
     {
       "appTitle": "Campionato Polpette 2018",
-      "apiUrl": "http://10.121.1.22:3000/api/",
-      "imageUrl": "http://10.121.1.22/gallery1/"
+      "apiUrl": "http://10.100.11.11:3000/api/",
+      "imageUrl": "http://10.100.11.11/gallery1/",
+      "slideHeight": "1080px"
     }
 ]

@@ -6,14 +6,14 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field>
-      <mat-select #squadraCampionato placeholder="Campionato" name="campionatoId">
+      <mat-select #squadraCampionato placeholder="Campionato" name="campionatoId" required>
         <mat-option *ngFor="let campionato of campionati" [value]="campionato.id">
           {{ campionato.anno }}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="squadra-detail-full-width">
-      <input placeholder="Nome squadra" matInput #squadraName />
+      <input placeholder="Nome squadra" matInput #squadraName  required/>
     </mat-form-field>
     <!-- (click) passes input value to add() and then clears the input -->
     <button mat-button (click)="add(squadraName.value, squadraCampionato.value); squadraName.value=''; squadraCampionato.value=''">

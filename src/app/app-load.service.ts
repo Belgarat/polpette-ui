@@ -32,6 +32,7 @@ export class AppLoadService {
         APP_SETTINGS.appTitle = settings[0].appTitle;
         APP_SETTINGS.apiUrl = settings[0].apiUrl;
         APP_SETTINGS.imageUrl = settings[0].imageUrl;
+        APP_SETTINGS.slideHeight = settings[0].slideHeight;
 
         console.log(`APP_SETTINGS: `, APP_SETTINGS);
 

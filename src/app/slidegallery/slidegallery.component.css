@@ -1,0 +1,9 @@
+img.tumb {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    /*left: 50%;*/
+    /*height: 1080px;*/
+    /*margin-left: -150px; */
+    transform: translate(-50%, -50%);
+}

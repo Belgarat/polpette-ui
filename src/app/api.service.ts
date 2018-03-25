@@ -13,9 +13,7 @@ import { Punteggio } from './punteggio/punteggio.model';
 import { Slidegallery } from './slidegallery/slidegallery.model';
 import { Subject } from 'rxjs/Subject';
 
-
-
-var httpOptions = {
+const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
@@ -29,7 +27,7 @@ export class ApiService {
     getImages (container: String): Observable<Slidegallery[]> {
         return this.http.get<Slidegallery[]>(this.serviceUrl + 'gallery' + '/' + container + '/' + 'files')
         .pipe(
-            tap(container => this.log(`fetched container` + container)),
+            tap(cont => this.log(`fetched container` + cont)),
             catchError(this.handleError('getcontainer', []))
         );
     }
@@ -45,7 +43,6 @@ export class ApiService {
         );
     }
 
-    
     /** GET Squadra by id. Return `undefined` when id not found */
     getSquadraNo404<Data>(id: string): Observable<Squadra> {
         const url = `${this.serviceUrl + 'squadre'}/?id=${id}`;

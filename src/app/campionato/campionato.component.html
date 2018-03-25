@@ -6,7 +6,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
       <mat-form-field class="campionato-detail-full-width">
-        <input matInput #campionatoAnno placeholder="Nome campionato" />
+        <input matInput #campionatoAnno placeholder="Nome campionato"  required/>
       </mat-form-field>
       <mat-checkbox #campionatoCurrent [(ngModel)]="checked" name="current" value="1" [checked]="checked">Corrente</mat-checkbox>
     <!-- (click) passes input value to add() and then clears the input -->

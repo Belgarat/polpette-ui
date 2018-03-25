@@ -1,34 +1,36 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-grid-list cols="12" rowHeight="2:1">
-  <mat-grid-tile colspan="11">
-    <div style="text-align:center">
-      <h1>
-        {{ title }}
-      </h1>
-    </div>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>  
-  </mat-grid-tile>
-</mat-grid-list>
-<mat-menu #menu="matMenu">
-  <li mat-menu-item>
-    <mat-icon>home</mat-icon>
-    <span><a routerLink="/" routerLinkActive="active">Home</a></span>
-  </li>    
-  <li mat-menu-item>
-    <mat-icon>star</mat-icon>
-    <span><a routerLink="/campionato" routerLinkActive="active">Campionato</a></span>
-  </li>
-  <li mat-menu-item>
-    <mat-icon>dialpad</mat-icon>
-    <span><a routerLink="/squadra" routerLinkActive="active">Squadre</a></span>
-  </li>
-  <li mat-menu-item>
-    <mat-icon>list</mat-icon>
-    <span><a routerLink="/punteggi" routerLinkActive="active">Classifica</a></span>
-  </li>
-</mat-menu>
+<div *ngIf = "route !== '/gallery'">
+  <mat-grid-list cols="12" rowHeight="2:1">
+    <mat-grid-tile colspan="11">
+      <div style="text-align:center">
+        <h1>
+          {{ title }}
+        </h1>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1">
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>  
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-menu #menu="matMenu">
+    <li mat-menu-item>
+      <mat-icon>home</mat-icon>
+      <span><a routerLink="/" routerLinkActive="active">Home</a></span>
+    </li>    
+    <li mat-menu-item>
+      <mat-icon>star</mat-icon>
+      <span><a routerLink="/campionato" routerLinkActive="active">Campionato</a></span>
+    </li>
+    <li mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span><a routerLink="/squadra" routerLinkActive="active">Squadre</a></span>
+    </li>
+    <li mat-menu-item>
+      <mat-icon>list</mat-icon>
+      <span><a routerLink="/punteggi" routerLinkActive="active">Classifica</a></span>
+    </li>
+  </mat-menu>
+</div>
 <router-outlet></router-outlet>

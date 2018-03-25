@@ -1,3 +1,4 @@
-<div *ngIf="test">
-<slideshow [minHeight]="'820px'" [showArrows]="false" [autoPlay]="true" [autoPlayInterval]="7777" [imageUrls]="listImage"></slideshow>
+<div *ngFor="let li of listImage;let idx = index;">
+    <!--<slideshow [minHeight]="'1080px'" [showArrows]="false" [autoPlay]="true" [autoPlayInterval]="7777" [imageUrls]="listImage"></slideshow>-->
+    <img class="tumb" (click)="eventClick($event);" [style.height]="this.height" [style.display]="idx === counter ? 'block' : 'none'" [src]="li" />
 </div>
