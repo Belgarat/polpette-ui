@@ -18,6 +18,7 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
   public listImage = [];
   public test = false;
   public subscription: Subscription;
+  public subscription_slide: Subscription;
   public height = APP_SETTINGS.slideHeight;
   counter = 0;
 
@@ -27,14 +28,19 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadImageList();
-    const timer = TimerObservable.create(10000, 30000);
+    const timer = TimerObservable.create(1000, 60000);
+    const timer_slide = TimerObservable.create(5000, 5000);
     this.subscription = timer.subscribe( () => {
-      this.test = false;
       this.loadImageList();
+    });
+    this.subscription_slide = timer_slide.subscribe( () => {
+      const total = this.images.length - 1;
+      this.counter = this.click_next(total);
     });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscription_slide.unsubscribe();
   }
 
   loadImageList() {
