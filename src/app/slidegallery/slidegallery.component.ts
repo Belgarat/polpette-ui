@@ -47,7 +47,7 @@ export class SlidegalleryComponent implements OnInit, OnDestroy {
     this.listImage = [];
     this.apiService.getImages('gallery1').subscribe( (list) => {
       this.images = list;
-      this.images.map( i => this.listImage.push(APP_SETTINGS.imageUrl + i.name));
+      this.images.map( i => this.listImage.push(APP_SETTINGS.imageUrl + i.name + '?r=' + Math.floor(Math.random() * 123456) + 1  ));
       this.test = true;
     });
   }
