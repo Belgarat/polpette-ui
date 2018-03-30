@@ -9,7 +9,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Squadra } from './squadra/squadra.model';
 import { Campionato } from './campionato/campionato.model';
-import { Punteggio } from './punteggio/punteggio.model';
+import { Punteggio, Classifica } from './punteggio/punteggio.model';
 import { Slidegallery } from './slidegallery/slidegallery.model';
 import { Subject } from 'rxjs/Subject';
 
@@ -258,6 +258,16 @@ export class ApiService {
     /** GET squadre from the server */
     getPunteggi (): Observable<Punteggio[]> {
         return this.http.get<Punteggio[]>(this.serviceUrl + 'punteggi' + '?filter[order]=punteggio DESC')
+        .pipe(
+            tap(punteggi => this.log(`fetched punteggi`)),
+            catchError(this.handleError('getpunteggi', []))
+        );
+    }
+
+    /** GET punteggi by id from the server */
+    getPunteggiById (id: string): Observable<Classifica[]> {
+        console.log(id);
+        return this.http.get<Classifica[]>(this.serviceUrl + 'punteggi/' + id + '/classifica')
         .pipe(
             tap(punteggi => this.log(`fetched punteggi`)),
             catchError(this.handleError('getpunteggi', []))

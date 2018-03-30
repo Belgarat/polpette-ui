@@ -6,9 +6,9 @@
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
-        <ng-container matColumnDef="seqNo">
+        <ng-container matColumnDef="ordine">
             <mat-header-cell *matHeaderCellDef mat-sort-header> N. </mat-header-cell>
-            <mat-cell *matCellDef="let element;let i = index"> {{ i+1 }} </mat-cell>
+            <mat-cell *matCellDef="let element;let i = index"> {{ element.ordine }} </mat-cell>
           </ng-container>
         
 

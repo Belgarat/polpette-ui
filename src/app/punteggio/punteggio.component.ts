@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Punteggio } from './punteggio.model';
+import { Punteggio, Classifica } from './punteggio.model';
 import { Campionato } from '../campionato/campionato.model';
 import { Squadra } from '../squadra/squadra.model';
 import { ApiService } from '../api.service';
@@ -27,11 +27,11 @@ export interface Element {
 })
 
 export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
-  public punteggi: Punteggio[];
+  public punteggi: Classifica[];
   public squadre: Squadra[];
   public campionati: Campionato[];
   public current: Campionato;
-  displayedColumns = ['seqNo', 'squadraId', 'punteggio'];
+  displayedColumns = ['ordine', 'squadraId', 'punteggio'];
   dataSource: MatTableDataSource<Punteggio>;
   private subscription: Subscription;
   private page_subscription: Subscription;
@@ -43,7 +43,7 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.getPunteggi();
+    this.getCurrentCampionato();
     if ( this.dataSource ) {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sortD;
@@ -51,11 +51,10 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getPunteggi();
     this.getSquadre();
     this.getCampionati();
     this.getCurrentCampionato();
-    let timer = TimerObservable.create(10000, 30000);
+    let timer = TimerObservable.create(1000, 30000);
     let page_timer = TimerObservable.create(5000, 5000);
     this.subscription = timer.subscribe( () => {
       this.getSquadre();
@@ -72,7 +71,7 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
     this.page_subscription.unsubscribe();
   }
   getPunteggi(): void {
-    this.apiService.getPunteggi().subscribe(p => {
+    this.apiService.getPunteggiById(this.current[0].id).subscribe(p => {
       this.punteggi = p;
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = p;
@@ -92,7 +91,8 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
   getCurrentCampionato() {
     this.apiService.getCurrentCampionato().subscribe((c) => {
       this.current = c;
-      this.punteggi = this.getCurrentPunteggi();
+      //this.punteggi = this.getCurrentPunteggi();
+      this.getPunteggi();
     });
   }
   resolveSqName(id) {
