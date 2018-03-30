@@ -12,6 +12,7 @@ import { CampionatoComponent } from './campionato/campionato.component';
 import { CampionatoDetailComponent } from './campionato-detail/campionato-detail.component';
 import { PunteggioComponent } from './punteggio/punteggio.component';
 import { SquadraComponent, DialogOverviewDialog } from './squadra/squadra.component';
+import { RssFeedComponent } from './rss-feed/rss-feed.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppLoadModule } from './app-load.module';
@@ -40,7 +41,8 @@ import { SlidegalleryComponent } from './slidegallery/slidegallery.component';
     SortPipe,
     SortNumPipe,
     DialogOverviewDialog,
-    SlidegalleryComponent
+    SlidegalleryComponent,
+    RssFeedComponent
   ],
   imports: [
     BrowserModule,

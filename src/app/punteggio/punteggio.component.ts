@@ -9,7 +9,7 @@ import { Element } from '@angular/compiler';
 import { AfterViewInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DataSource } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs/Subscription';
-import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 
 
@@ -54,8 +54,8 @@ export class PunteggioComponent implements OnInit, AfterViewInit, OnDestroy {
     this.getSquadre();
     this.getCampionati();
     this.getCurrentCampionato();
-    let timer = TimerObservable.create(1000, 30000);
-    let page_timer = TimerObservable.create(5000, 5000);
+    const timer = TimerObservable.create(1000, 30000);
+    const page_timer = TimerObservable.create(5000, 5000);
     this.subscription = timer.subscribe( () => {
       this.getSquadre();
       this.getPunteggi();

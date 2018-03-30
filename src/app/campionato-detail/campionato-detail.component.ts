@@ -53,7 +53,7 @@ export class CampionatoDetailComponent implements OnInit {
   }
 
  save(): void {
-    this.checked == true ? this.campionato.current = 1 : this.campionato.current = 0;
+    this.checked === true ? this.campionato.current = 1 : this.campionato.current = 0;
     this.apiService.updateCampionato(this.campionato)
       .subscribe(() => {
         this.apiService.setCurrentCampionato(this.campionato).subscribe();
