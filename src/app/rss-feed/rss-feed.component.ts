@@ -10,7 +10,9 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
   animations: [
     trigger('load',
     [
-      transition('* => *', [style({ opacity: 0.8, transform: 'translateX(50%)' }), animate('1000ms ease-out')]),
+      state('void', style({transform: 'translateX(100%)'})),
+      transition('slide <=> inactive', [style({ opacity: 0.8, transform: 'translateX(100%)' }), animate('1000ms')]),
+      /*transition('inactive => slide', [style({ opacity: 0.8, transform: 'translateX(100%)' }), animate('1000ms')])*/
     ])
   ]
 })
@@ -34,7 +36,8 @@ export class RssFeedComponent implements OnInit, OnDestroy {
   }
 
   changeState() {
-    this.footerState === 'inactive' ? this.footerState = 'slide' : this.footerState = 'inactive';
+    /*this.footerState === 'inactive' ? this.footerState = 'slide' : this.footerState = 'inactive';*/
+    this.footerState = this.footerState === 'inactive' ? 'slide' : 'inactive';
     this.footerState === 'inactive' ? this.message = 'Seconda news' : this.message = 'Prima news';
   }
 
